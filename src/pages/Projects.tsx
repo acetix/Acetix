@@ -38,6 +38,8 @@ export default function Projects() {
   const [filterOpen, setFilterOpen] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
 
+  const hasActiveFilters = category !== 'all' || sort !== 'both';
+
   // বাইরে ক্লিক বা Escape চাপলে ফিল্টার ড্রপডাউন বন্ধ হয়
   useEffect(() => {
     if (!filterOpen) return;
@@ -102,31 +104,8 @@ export default function Projects() {
       <h1 className="sr-only">All projects — acetix.xyz</h1>
       {/* Controls */}
       <Reveal delay={0.08}>
-        <div className="mt-2 flex min-w-0 flex-col gap-4 border-b border-ink/10 py-5 sm:flex-row sm:flex-wrap sm:items-center">
-          {/* Category pills — always visible so every project list is one click away */}
-          <div
-            role="tablist"
-            aria-label="Filter projects by category"
-            className="-mx-1 flex min-w-0 flex-1 items-center gap-2 overflow-x-auto px-1 py-1"
-          >
-            {categories.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                role="tab"
-                aria-selected={category === c.id}
-                onClick={() => setCategory(c.id)}
-                className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                  category === c.id
-                    ? 'border-ink bg-ink text-paper'
-                    : 'border-ink/15 bg-white text-smoke hover:border-ink/40 hover:text-ink'
-                }`}
-              >
-                {c.label}
-              </button>
-            ))}
-          </div>
-          <div className="relative flex-1 sm:min-w-52">
+        <div className="mt-2 flex items-center gap-3 border-y border-ink/10 py-5">
+          <div className="relative min-w-0 flex-1">
             <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-smoke" />
             <input
               value={queryText}
@@ -137,23 +116,22 @@ export default function Projects() {
             />
           </div>
 
-          {/* Sort lives in the old Filters dropdown; categories are the
-              always-visible pills above. */}
+          {/* Categories + sort — everything inside the Filters dropdown. */}
           <div className="relative shrink-0" ref={filterRef}>
             <button
               type="button"
               onClick={() => setFilterOpen((v) => !v)}
-              aria-label="Sort projects"
+              aria-label="Filter and sort projects"
               aria-expanded={filterOpen}
               className={`inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold transition ${
-                filterOpen || sort !== 'both'
+                filterOpen || hasActiveFilters
                   ? 'border-ink bg-ink text-paper'
                   : 'border-ink/15 bg-white text-smoke hover:border-ink/40 hover:text-ink'
               }`}
             >
               <SlidersHorizontal className="h-4 w-4" />
-              <span className="hidden sm:inline">Sort</span>
-              {sort !== 'both' && !filterOpen && (
+              <span className="hidden sm:inline">Filters</span>
+              {hasActiveFilters && !filterOpen && (
                 <span className="h-2 w-2 rounded-full bg-sun" />
               )}
               <ChevronDown
@@ -171,6 +149,29 @@ export default function Projects() {
                   className="absolute right-0 z-30 mt-2.5 w-64 rounded-3xl border border-ink/10 bg-white p-3 shadow-xl shadow-ink/10"
                 >
                   <p className="px-3 pt-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-smoke">
+                    Category
+                  </p>
+                  <div className="mt-2 space-y-1">
+                    {categories.map((c) => (
+                      <button
+                        key={c.id}
+                        type="button"
+                        onClick={() => setCategory(c.id)}
+                        className={`flex w-full items-center justify-between rounded-2xl px-3 py-2.5 text-sm font-medium transition ${
+                          category === c.id
+                            ? 'bg-ink text-paper'
+                            : 'text-smoke hover:bg-ink/5 hover:text-ink'
+                        }`}
+                      >
+                        {c.label}
+                        {category === c.id && <Check className="h-4 w-4" />}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="mx-3 my-3 h-px bg-ink/10" />
+
+                  <p className="px-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-smoke">
                     Sort by
                   </p>
                   <div className="mt-2 space-y-1">
