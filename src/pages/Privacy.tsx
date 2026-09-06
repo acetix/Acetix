@@ -1,0 +1,140 @@
+import { Link } from 'react-router-dom';
+import { Ban, FileLock2, Mail, UserX } from 'lucide-react';
+import Reveal from '../components/Reveal';
+
+const TLDR = [
+  {
+    icon: UserX,
+    title: 'No accounts',
+    copy: 'acetix tools do not ask who you are. There is nothing to sign in to on the main tools.',
+  },
+  {
+    icon: FileLock2,
+    title: 'Your files stay yours',
+    copy: 'Converters and document tools process everything in your browser. Files never touch a server.',
+  },
+  {
+    icon: Ban,
+    title: 'No ads, no trackers',
+    copy: 'No third-party analytics, no advertising pixels, no behavioural profiling. Ever.',
+  },
+];
+
+export default function Privacy() {
+  return (
+    <div className="mx-auto max-w-4xl px-6 pb-24 pt-32 md:pt-40">
+      <Reveal>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand">
+          Privacy
+        </p>
+        <h1 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl">
+          The short version: your data barely exists here.
+        </h1>
+        <p className="mt-4 text-sm text-smoke">Last updated: January 2025</p>
+      </Reveal>
+
+      <div className="mt-12 grid gap-5 sm:grid-cols-3">
+        {TLDR.map((item, i) => (
+          <Reveal key={item.title} delay={i * 0.07}>
+            <div className="h-full rounded-3xl border border-ink/10 bg-white p-6">
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-sun">
+                <item.icon className="h-5 w-5 text-white" />
+              </span>
+              <h2 className="mt-4 font-display text-lg font-bold">{item.title}</h2>
+              <p className="mt-2 text-sm leading-relaxed text-smoke">{item.copy}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal delay={0.1}>
+        <div className="mt-14 space-y-10 leading-relaxed text-smoke">
+          <section>
+            <h2 className="font-display text-2xl font-bold tracking-tight text-ink">
+              What is collected
+            </h2>
+            <p className="mt-3">
+              Only one thing is intentionally stored: when you post in the{' '}
+              <Link to="/suggest" className="font-semibold text-brand hover:underline">
+                Suggestion Box
+              </Link>
+              , your idea title, category, description and optional name are
+              saved to a Google Firebase Firestore database so the public
+              wishlist can show them. That is the entire list.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-2xl font-bold tracking-tight text-ink">
+              Files and content
+            </h2>
+            <p className="mt-3">
+              Converter, document and generator tools published on acetix run
+              entirely in your browser using client-side JavaScript and
+              WebAssembly. The files you open never leave your device, are
+              never uploaded, and cannot be seen by anyone running acetix.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-2xl font-bold tracking-tight text-ink">
+              Cookies & analytics
+            </h2>
+            <p className="mt-3">
+              There are no advertising cookies. A few tools keep preferences
+              (like your last quality setting or palette history) in your own
+              browser's local storage — that data stays on your machine and can
+              be cleared by emptying browser storage.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-2xl font-bold tracking-tight text-ink">
+              Third-party services
+            </h2>
+            <p className="mt-3">
+              Hosting is provided by Vercel, and the contact-form datastore by
+              Google Firebase. Both may process standard technical logs (IP
+              address, browser, timestamps) required to serve the site
+              securely. No content data is sold or shared with anyone.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-2xl font-bold tracking-tight text-ink">
+              Your choices
+            </h2>
+            <p className="mt-3">
+              Want a suggestion you posted removed? Reach out via the{' '}
+              <Link to="/contact" className="font-semibold text-brand hover:underline">
+                contact page
+              </Link>{' '}
+              and it will be removed from Firestore. Nothing else about you is
+              kept, so there is nothing else to delete.
+            </p>
+          </section>
+
+          <section className="rounded-3xl bg-sand/60 p-7">
+            <div className="flex items-start gap-4">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-ink">
+                <Mail className="h-5 w-5 text-paper" />
+              </span>
+              <div>
+                <h2 className="font-display text-lg font-bold text-ink">
+                  Questions about this policy?
+                </h2>
+                <p className="mt-1.5 text-sm">
+                  Use any channel on the{' '}
+                  <Link to="/contact" className="font-semibold text-brand hover:underline">
+                    contact page
+                  </Link>
+                  . Privacy questions get answered as plainly as this page.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </Reveal>
+    </div>
+  );
+}
