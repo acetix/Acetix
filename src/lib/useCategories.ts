@@ -85,9 +85,9 @@ export function useCategories(projects: Project[]): CategoryItem[] {
     if (!fromFirestore || fromFirestore.length === 0) {
       return [{ id: 'all', label: 'All' }, ...derived];
     }
-    // Firestore তালিকা + প্রজেক্ট থেকে পাওয়া নতুন স্লাগ — দুটোই ফিল্টারে
-    // থাকবে, যাতে Firestore/প্রজেক্ট অমিল হলেও ফিল্টার ফাঁকা ফল না দেয়।
-    // একই লেবেলের ডুপ্লিকেট পিল এড়াতে id ও label দুটোই মিলিয়ে দেখা হয়।
+    // Union of the Firestore list and any slugs found only on projects,
+    // so a mismatch never yields an empty filter result. Id and label are
+    // both compared to avoid duplicate-looking filter entries.
     const taken = new Set<string>();
     fromFirestore.forEach((c) => {
       taken.add(c.id);

@@ -40,7 +40,7 @@ export default function Projects() {
 
   const hasActiveFilters = category !== 'all' || sort !== 'both';
 
-  // বাইরে ক্লিক বা Escape চাপলে ফিল্টার ড্রপডাউন বন্ধ হয়
+  // Close the filter dropdown on outside click or Escape.
   useEffect(() => {
     if (!filterOpen) return;
     function onPointerDown(e: MouseEvent | TouchEvent) {
@@ -64,8 +64,8 @@ export default function Projects() {
   const filtered = useMemo(() => {
     const q = queryText.trim().toLowerCase();
     return projects.filter((p) => {
-      // Firestore id/slug ও label দুভাবেই category মেলানো হয়, যাতে
-      // ফিল্টার ক্লিক করলেই প্রজেক্ট লোড হয় (খালি ফল নয়)।
+      // Match by Firestore id/slug and by human-readable label, so the
+      // chosen filter always loads its projects instead of showing empty.
       const inCategory = categoryMatches(p.category, category, categories);
       if (!q) return inCategory;
       const haystack =
@@ -74,7 +74,6 @@ export default function Projects() {
     });
   }, [projects, queryText, category, categories]);
 
-  /* ক্রম: ১) Latest uploads  ২) Most liked  ৩) Latest + Most liked (দুটোর র‍্যাঙ্ক মিলিয়ে) */
   const sorted = useMemo(() => {
     const arr = [...filtered];
     const newest = (p: (typeof arr)[number]) => asDate(p.createdAt)?.getTime() ?? 0;
@@ -83,7 +82,7 @@ export default function Projects() {
     if (sort === 'liked') {
       arr.sort((a, b) => likes(b) - likes(a) || newest(b) - newest(a) || a.title.localeCompare(b.title));
     } else if (sort === 'both') {
-      // Borda-style blend: rank in the newest list + rank in the most-liked list
+      // Combined rank: position in newest list + position in most-liked list.
       const newestRank = new Map<string, number>();
       [...arr].sort((a, b) => newest(b) - newest(a)).forEach((p, i) => newestRank.set(p.id, i));
       const likedRank = new Map<string, number>();

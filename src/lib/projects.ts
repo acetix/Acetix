@@ -2,12 +2,12 @@ import type { Project } from './types';
 import { asDate } from './dates';
 
 /*
-  কোনো হার্ডকোড করা ক্যাটাগরি তালিকা নেই — ক্যাটাগরি আসে Firestore-এর
-  `categories` কালেকশন থেকে (src/lib/useCategories.ts), আর তা না থাকলে
-  প্রজেক্টগুলোর `category` ফিল্ড থেকে অটোমেটিক বানানো হয়। অর্থাৎ নতুন
-  প্রজেক্টে নতুন ক্যাটাগরি-স্লাগ দিলেই ফিল্টারে নতুন অপশন দেখা যাবে।
+  Category ids are not hardcoded — they come from the Firestore
+  `categories` collection (src/lib/useCategories.ts), falling back to the
+  projects' own `category` fields when that collection is absent. Adding a
+  new slug to a project automatically adds a filter option.
 
-  এই ফাইলে শুধু লেবেল/গ্রেডিয়েন্ট হেল্পার আছে।
+  This file only holds label/gradient helpers.
 */
 
 const LEGACY_LABELS: Record<string, string> = {
@@ -16,7 +16,7 @@ const LEGACY_LABELS: Record<string, string> = {
   design: 'Design Tool',
 };
 
-/** "api-testing" → "Api testing" (প্রথম অক্ষর বড়) */
+/** "api-testing" → "Api testing" (capitalise the first letter) */
 export function prettifyCategory(id: string): string {
   const words = id.replace(/[-_]+/g, ' ').trim();
   if (!words) return 'Other';
@@ -24,9 +24,9 @@ export function prettifyCategory(id: string): string {
 }
 
 /**
- * " Lable " → "lable" — Firestore-এর category/category-slug যেকোনো
- * হাতের লেখায় (বড়-ছোট অক্ষর, স্পেস/আন্ডারস্কোর) এলেও ফিল্টার তুলনাটা
- * যেন সবসময় মেলে, সেজন্য একই স্লাগ-আকারে আনা হয়।
+ * " Lable " → "lable" — project category values arrive in any casing
+ * (spaces/underscores included), so normalise them to one slug shape to
+ * keep every filter comparison stable.
  */
 export function normalizeCategoryId(id: string): string {
   return id.trim().toLowerCase().replace(/[\s_]+/g, '-');
@@ -38,11 +38,11 @@ export interface CategoryRef {
 }
 
 /**
- * প্রজেক্ট কি選 সিলেক্ট করা category-র মধ্যে পড়ে?
- * Firestore-এ category doc-এর id/slug আর প্রজেক্টের `category` ফিল্ডে
- * হুবহু একই লেখা নাও থাকতে পারে (যেমন id "Slug" কিন্তু প্রজেক্টে
- * "Lable") — তাই id মিললে তো বটেই, সিলেক্ট করা category-র label-এর
- * সাথেও মিলিয়ে দেখা হয়। 'all' হলে সব প্রজেক্টই মেলে।
+ * Does a project belong to the selected category?
+ * A category doc's id/slug and a project's `category` field may not match
+ * letter-for-letter (e.g. id "slug" vs value "Lable"), so compare against
+ * both the id and the selected category's display label. 'all' matches
+ * every project.
  */
 export function categoryMatches(
   projectCategory: string | undefined,
@@ -58,7 +58,7 @@ export function categoryMatches(
 }
 
 export function categoryLabel(id: string): string {
-  return LEGACY_LABELS[id] ?? prettifyCategory(id ?? '');
+  return LEGACY_LABELS[normalizeCategoryId(id)] ?? prettifyCategory(id ?? '');
 }
 
 /** Default gradient used for fallback tiles when an image link fails. */
@@ -70,7 +70,7 @@ export const CATEGORY_ACCENT: Record<string, string> = {
 
 export function projectAccent(project: Pick<Project, 'accent' | 'category'>): string {
   if (project.accent && project.accent.trim()) return project.accent;
-  return CATEGORY_ACCENT[project.category] ?? 'from-brand to-ember';
+  return CATEGORY_ACCENT[normalizeCategoryId(project.category)] ?? 'from-brand to-ember';
 }
 
 export function projectDomain(project: Pick<Project, 'domain' | 'projectUrl'>): string {
