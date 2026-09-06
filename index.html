@@ -19,17 +19,11 @@
     <meta name="theme-color" content="#FA3E0A" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#171110" media="(prefers-color-scheme: dark)" />
     <script>
-      /* Theme pre-paint: default "system" (follows the OS); honours a
-         stored Bright/Dark override from the header button. */
+      /* System-only theme — no toggle button. Applied before first
+         paint so the correct scheme shows immediately. */
       (function () {
         try {
-          var mode = localStorage.getItem('acetix.theme-mode') || 'system';
-          var dark =
-            mode === 'dark'
-              ? true
-              : mode === 'light'
-                ? false
-                : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
           document.documentElement.classList.toggle('dark', dark);
         } catch (e) {}
       })();
