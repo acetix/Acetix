@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
+import ThemeModeButton from './ThemeModeButton';
 
 const LINKS = [
   { to: '/projects', label: 'Projects' },
@@ -46,14 +47,22 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="hidden md:block">
-          <Link
-            to="/projects"
-            className="group inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-brand to-ember px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:shadow-md hover:brightness-105"
-          >
-            Explore tools
-            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </Link>
+        <div className="flex items-center gap-2">
+          <div className="hidden md:block">
+            <ThemeModeButton />
+          </div>
+          <div className="hidden md:block">
+            <Link
+              to="/projects"
+              className="group inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-brand to-ember px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:shadow-md hover:brightness-105"
+            >
+              Explore tools
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </Link>
+          </div>
+          <div className="md:hidden">
+            <ThemeModeButton size="sm" />
+          </div>
         </div>
 
         <button
