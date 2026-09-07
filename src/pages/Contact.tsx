@@ -75,8 +75,9 @@ export default function Contact() {
     },
   ];
 
-  /* Channels are read from Firestore (config/site) — the owner can change
-     WhatsApp / Telegram / GitHub / email any time without a redeploy. */
+  /* Channels are read from the cloud database (config/site) — the owner
+     can change WhatsApp / Telegram / GitHub / email any time without a
+     redeploy. */
   const channels: SocialChannel[] = [
     config.whatsapp.trim() && {
       label: 'WhatsApp',
@@ -109,7 +110,7 @@ export default function Contact() {
   ].filter(Boolean) as SocialChannel[];
 
   return (
-    <div className="mx-auto max-w-6xl px-6 pb-24 pt-32 md:pt-40">
+    <div className="mx-auto max-w-6xl min-w-0 overflow-x-clip px-6 pb-24 pt-32 md:pt-40">
       <Reveal>
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand">
           Contact
@@ -119,12 +120,55 @@ export default function Contact() {
         </h1>
       </Reveal>
 
+      {/* Instant channels */}
+      <Reveal delay={0.05} className="min-w-0">
+        <div className="mt-10 min-w-0 rounded-3xl border border-ink/10 bg-white p-7 md:p-10">
+          <h2 className="font-display text-2xl font-bold">Instant channels</h2>
+          <p className="mt-1.5 text-sm leading-relaxed text-smoke">
+            Live links, managed from the cloud
+            {source === 'firebase' ? ' — currently synced.' : '.'}
+          </p>
+          {channels.length === 0 ? (
+            <p className="mt-6 rounded-2xl bg-sand/60 px-5 py-6 text-center text-sm text-smoke">
+              চ্যানেলগুলো এখনো যোগ করা হয়নি — cloud database-এর siteConfig/site
+              ডকুমেন্টে লিংক বসালেই এখানে দেখা যাবে।
+            </p>
+          ) : (
+          <div className="mt-6 grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 [&>*]:min-w-0">
+            {channels.map((channel) => (
+              <a
+                key={channel.label}
+                href={channel.href}
+                target={channel.href.startsWith('mailto:') ? undefined : '_blank'}
+                rel={channel.href.startsWith('mailto:') ? undefined : 'noreferrer'}
+                className="group flex items-center gap-3.5 rounded-2xl border border-ink/10 bg-paper p-4 transition hover:-translate-y-0.5 hover:border-ink/25 hover:shadow-md"
+              >
+                <span
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${channel.tile}`}
+                >
+                  <channel.icon className="h-5 w-5 text-white" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block font-display text-sm font-bold">
+                    {channel.label}
+                  </span>
+                  <span className="block truncate text-xs text-smoke">
+                    {channel.caption}
+                  </span>
+                </span>
+              </a>
+            ))}
+          </div>
+          )}
+        </div>
+      </Reveal>
+
       {/* Categories */}
-      <Reveal delay={0.05}>
-        <p className="mt-10 text-xs font-semibold uppercase tracking-[0.25em] text-smoke">
+      <Reveal delay={0.08} className="min-w-0">
+        <p className="mt-8 text-xs font-semibold uppercase tracking-[0.25em] text-smoke">
           Pick a category
         </p>
-        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+        <div className="mt-4 grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-3 [&>*]:min-w-0">
           {categories.map((category) => {
             const inner = (
               <>
@@ -154,51 +198,8 @@ export default function Contact() {
         </div>
       </Reveal>
 
-      {/* Instant channels */}
-      <Reveal delay={0.08}>
-        <div className="mt-8 rounded-3xl border border-ink/10 bg-white p-7 md:p-10">
-          <h2 className="font-display text-2xl font-bold">Instant channels</h2>
-          <p className="mt-1.5 text-sm leading-relaxed text-smoke">
-            Live links, managed from Firebase
-            {source === 'firebase' ? ' — currently synced.' : '.'}
-          </p>
-          {channels.length === 0 ? (
-            <p className="mt-6 rounded-2xl bg-sand/60 px-5 py-6 text-center text-sm text-smoke">
-              চ্যানেলগুলো এখনো যোগ করা হয়নি — Firestore-এর siteConfig/site
-              ডকুমেন্টে লিংক বসালেই এখানে দেখা যাবে।
-            </p>
-          ) : (
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {channels.map((channel) => (
-              <a
-                key={channel.label}
-                href={channel.href}
-                target={channel.href.startsWith('mailto:') ? undefined : '_blank'}
-                rel={channel.href.startsWith('mailto:') ? undefined : 'noreferrer'}
-                className="group flex items-center gap-3.5 rounded-2xl border border-ink/10 bg-paper p-4 transition hover:-translate-y-0.5 hover:border-ink/25 hover:shadow-md"
-              >
-                <span
-                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${channel.tile}`}
-                >
-                  <channel.icon className="h-5 w-5 text-white" />
-                </span>
-                <span className="min-w-0">
-                  <span className="block font-display text-sm font-bold">
-                    {channel.label}
-                  </span>
-                  <span className="block truncate text-xs text-smoke">
-                    {channel.caption}
-                  </span>
-                </span>
-              </a>
-            ))}
-          </div>
-          )}
-        </div>
-      </Reveal>
-
       {/* Status cards */}
-      <div className="mt-8 grid gap-5 sm:grid-cols-2">
+      <div className="mt-8 grid min-w-0 grid-cols-1 gap-5 sm:grid-cols-2 [&>*]:min-w-0">
         <Reveal delay={0.12}>
           <div className="h-full rounded-3xl border border-ink/10 bg-white p-7">
             <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-ember to-sun">
@@ -207,8 +208,8 @@ export default function Contact() {
             <h3 className="mt-4 font-display text-lg font-bold">Backend status</h3>
             <p className="mt-2 text-sm leading-relaxed text-smoke">
               {firebaseEnabled
-                ? 'Firebase is connected — projects, the wishlist and these links are live-synced from Firestore.'
-                : 'Running on bundled demo data. Firebase keys would sync everything live.'}
+                ? 'Backend is connected — projects, the wishlist and these links are live-synced from the cloud database.'
+                : 'Running on bundled demo data. Backend keys would sync everything live.'}
             </p>
             <span
               className={`mt-4 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${
@@ -220,7 +221,7 @@ export default function Contact() {
               <span
                 className={`h-2 w-2 rounded-full ${firebaseEnabled ? 'bg-emerald-500' : 'bg-amber-500'}`}
               />
-              {firebaseEnabled ? 'Firestore live' : 'Demo mode'}
+              {firebaseEnabled ? 'Cloud live' : 'Demo mode'}
             </span>
           </div>
         </Reveal>

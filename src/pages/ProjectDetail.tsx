@@ -47,7 +47,7 @@ export default function ProjectDetail() {
   const features = project.features ?? [];
 
   return (
-    <div className="mx-auto max-w-6xl px-6 pb-24 pt-28 md:pt-36">
+    <div className="mx-auto max-w-6xl min-w-0 overflow-x-clip px-6 pb-24 pt-28 md:pt-36">
       {/* Back */}
       <Reveal>
         <Link
@@ -106,8 +106,8 @@ export default function ProjectDetail() {
       </Reveal>
 
       {/* Body */}
-      <div className="mt-16 grid gap-12 lg:grid-cols-[1fr_320px]">
-        <div>
+      <div className="mt-16 grid min-w-0 grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="min-w-0">
           <Reveal>
             <h2 className="font-display text-2xl font-bold tracking-tight">Overview</h2>
             <p className="mt-4 leading-relaxed text-smoke">{project.fullDescription}</p>
@@ -148,8 +148,8 @@ export default function ProjectDetail() {
         </div>
 
         {/* Side card */}
-        <Reveal delay={0.1}>
-          <aside className="h-fit rounded-3xl border border-ink/10 bg-white p-7 lg:sticky lg:top-24">
+        <Reveal delay={0.1} className="min-w-0">
+          <aside className="h-fit min-w-0 rounded-3xl border border-ink/10 bg-white p-7 lg:sticky lg:top-24">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-smoke">
               At a glance
             </p>

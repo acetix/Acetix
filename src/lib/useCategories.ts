@@ -58,7 +58,7 @@ function loadFromFirestore(): Promise<CategoryItem[] | null> {
 
 /**
  * The category filter list for the Projects page.
- * Priority: Firestore `categories` collection → auto-derived from the
+ * Priority: cloud `categories` collection → auto-derived from the
  * loaded projects' `category` fields. "All" is always pinned first.
  */
 export function useCategories(projects: Project[]): CategoryItem[] {
@@ -85,7 +85,7 @@ export function useCategories(projects: Project[]): CategoryItem[] {
     if (!fromFirestore || fromFirestore.length === 0) {
       return [{ id: 'all', label: 'All' }, ...derived];
     }
-    // Union of the Firestore list and any slugs found only on projects,
+    // Union of the cloud list and any slugs found only on projects,
     // so a mismatch never yields an empty filter result. Id and label are
     // both compared to avoid duplicate-looking filter entries.
     const taken = new Set<string>();

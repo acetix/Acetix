@@ -12,7 +12,7 @@ import {
   SlidersHorizontal,
   ThumbsUp,
 } from 'lucide-react';
-import FirestoreNotice from '../components/FirestoreNotice';
+import CatalogueNotice from '../components/CatalogueNotice';
 import ProjectCard from '../components/ProjectCard';
 import Reveal from '../components/Reveal';
 import SkeletonCard from '../components/SkeletonCard';
@@ -64,7 +64,7 @@ export default function Projects() {
   const filtered = useMemo(() => {
     const q = queryText.trim().toLowerCase();
     return projects.filter((p) => {
-      // Match by Firestore id/slug and by human-readable label, so the
+      // Match by category id/slug and by human-readable label, so the
       // chosen filter always loads its projects instead of showing empty.
       const inCategory = categoryMatches(p.category, category, categories);
       if (!q) return inCategory;
@@ -99,7 +99,7 @@ export default function Projects() {
   }, [filtered, sort]);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 pb-24 pt-20 md:pt-24">
+    <div className="mx-auto max-w-6xl min-w-0 overflow-x-clip px-6 pb-24 pt-20 md:pt-24">
       <h1 className="sr-only">All projects — acetix.xyz</h1>
       {/* Controls */}
       <Reveal delay={0.08}>
@@ -200,17 +200,17 @@ export default function Projects() {
         </div>
       </Reveal>
 
-      <FirestoreNotice state={state} />
+      <CatalogueNotice state={state} />
 
       {/* Grid */}
       {loading ? (
-        <div className="mt-12 grid gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid min-w-0 grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
             <SkeletonCard key={i} />
           ))}
         </div>
       ) : sorted.length > 0 ? (
-        <div className="mt-12 grid gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid min-w-0 grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-3 [&>*]:min-w-0">
           {sorted.map((project, i) => (
             <Reveal key={project.id} delay={Math.min(i, 5) * 0.06}>
               <ProjectCard project={project} />
@@ -243,7 +243,7 @@ export default function Projects() {
           </p>
           <p className="max-w-sm text-sm text-smoke">
             {projects.length === 0
-              ? 'Everything here comes straight from Firestore — add a project there and it appears on this page automatically.'
+              ? 'Everything here comes straight from the cloud database — add a project there and it appears on this page automatically.'
               : 'Try a different keyword, or reset the filters to see the whole collection.'}
           </p>
           {projects.length > 0 && (

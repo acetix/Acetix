@@ -146,7 +146,7 @@ export default function Footer() {
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs sm:flex-row">
           <p>© {year} acetix.xyz — All experiments reserved.</p>
           <p className="font-display tracking-wide">
-            Built with React · TypeScript · Tailwind · Firebase
+            Built with React · TypeScript · Tailwind · Cloud
           </p>
         </div>
       </div>

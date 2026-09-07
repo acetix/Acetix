@@ -26,9 +26,9 @@ export interface VoteResult {
  * One vote per browser per project (localStorage lock). Clicking the same
  * button again retracts the vote; clicking the other side switches it.
  *
- * The Firestore rules only let the public touch the `like`/`dislike`
- * counters (`hasOnly(['like','dislike'])`), so nothing else on an owner's
- * project document can be modified by a visitor.
+ * The backend access rules only let the public touch the `like`/`dislike`
+ * counters, so nothing else on an owner's project document can be
+ * modified by a visitor.
  */
 export async function voteOnProject(project: Project, vote: Vote): Promise<VoteResult> {
   const prev = myVoteFor(project.id);
@@ -77,7 +77,7 @@ export async function voteOnProject(project: Project, vote: Vote): Promise<VoteR
         await updateDoc(doc(db, 'projects', project.id), delta);
       }
     } catch (error) {
-      console.warn('[acetix] Vote could not be saved (publish the updated rules).', error);
+      console.warn('[acetix] Vote could not be saved (access rules pending?).', error);
     }
   }
 

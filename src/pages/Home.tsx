@@ -57,7 +57,7 @@ export default function Home() {
   const count = String(projects.length).padStart(2, '0');
 
   return (
-    <div>
+    <div className="min-w-0 overflow-x-clip">
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden pb-16 pt-32 md:pt-40">
         <div
@@ -150,7 +150,7 @@ export default function Home() {
       <Marquee items={projects.map((p) => p.title)} />
 
       {/* ── Featured projects ────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
+      <section className="mx-auto min-w-0 max-w-6xl px-6 py-24">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
@@ -177,25 +177,25 @@ export default function Home() {
               <Sparkles className="h-8 w-8 text-smoke" />
               <p className="font-display text-xl font-bold">No projects here yet</p>
               <p className="max-w-sm text-sm text-smoke">
-                Everything on this page feeds straight from Firestore — the moment
+                Everything on this page feeds straight from the cloud database — the moment
                 projects are added there, they show up here. No demo data, no filler.
               </p>
             </div>
           </Reveal>
         ) : (
-          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {featured.map((project, i) => (
-              <Reveal key={project.id} delay={i * 0.08}>
-                <ProjectCard project={project} />
-              </Reveal>
-            ))}
-          </div>
+        <div className="mt-12 grid min-w-0 grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 [&>*]:min-w-0">
+          {featured.map((project, i) => (
+            <Reveal key={project.id} delay={i * 0.08} className="min-w-0">
+              <ProjectCard project={project} />
+            </Reveal>
+          ))}
+        </div>
         )}
       </section>
 
       {/* ── Mission ──────────────────────────────────────────── */}
-      <section className="px-6">
-        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] bg-ink px-6 py-16 text-paper md:px-14 md:py-20">
+      <section className="min-w-0 px-6">
+        <div className="relative mx-auto min-w-0 max-w-6xl overflow-hidden rounded-[2.5rem] bg-ink px-6 py-16 text-paper md:px-14 md:py-20">
           <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-brand/25 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-40 -left-24 h-96 w-96 rounded-full bg-sun/15 blur-3xl" />
 
@@ -215,7 +215,7 @@ export default function Home() {
             </p>
           </Reveal>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
+          <div className="mt-12 grid min-w-0 grid-cols-1 gap-6 md:grid-cols-2 [&>*]:min-w-0">
             <Reveal delay={0.1}>
               <div className="h-full rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur">
                 <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-ember">
@@ -254,7 +254,7 @@ export default function Home() {
       </section>
 
       {/* ── Principles ───────────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
+      <section className="mx-auto min-w-0 max-w-6xl px-6 py-24">
         <Reveal>
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand">
             How things get built
@@ -264,9 +264,9 @@ export default function Home() {
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid min-w-0 grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 [&>*]:min-w-0">
           {PRINCIPLES.map((principle, i) => (
-            <Reveal key={principle.title} delay={i * 0.07}>
+            <Reveal key={principle.title} delay={i * 0.07} className="min-w-0">
               <div className="h-full rounded-3xl border border-ink/10 bg-white p-7 transition-shadow duration-300 hover:shadow-xl hover:shadow-ink/5">
                 <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand to-sun">
                   <principle.icon className="h-5 w-5 text-white" />
@@ -280,9 +280,9 @@ export default function Home() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────── */}
-      <section className="px-6 pb-24">
-        <Reveal>
-          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-brand via-ember to-sun px-6 py-20 text-center text-white md:py-24">
+      <section className="min-w-0 px-6 pb-24">
+        <Reveal className="min-w-0">
+          <div className="relative mx-auto min-w-0 max-w-6xl overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-brand via-ember to-sun px-6 py-20 text-center text-white md:py-24">
             <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-white/15 blur-2xl" />
             <div className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-ink/15 blur-2xl" />
 

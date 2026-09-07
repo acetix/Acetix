@@ -8,9 +8,9 @@ interface ProjectImageProps {
 }
 
 /**
- * Project screenshots come from direct image URLs (managed in Firestore,
- * never uploaded to Storage). If a link is missing or fails to load, a
- * gradient tile with the project's initial keeps the layout intact.
+ * Project screenshots come from direct image URLs (managed in the cloud
+ * database, never uploaded to Storage). If a link is missing or fails to
+ * load, a gradient tile with the project's initial keeps the layout intact.
  */
 export default function ProjectImage({ project, className = '' }: ProjectImageProps) {
   const [failed, setFailed] = useState(false);

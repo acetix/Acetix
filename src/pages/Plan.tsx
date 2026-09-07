@@ -4,7 +4,7 @@ import Reveal from '../components/Reveal';
 
 export default function Plan() {
   return (
-    <div className="mx-auto flex min-h-[70vh] max-w-2xl flex-col items-center px-6 pb-24 pt-40 text-center md:pt-48">
+    <div className="mx-auto flex min-h-[70vh] w-full max-w-2xl min-w-0 flex-col items-center overflow-x-clip px-6 pb-24 pt-40 text-center md:pt-48">
       <Reveal>
         <span className="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-brand to-sun">
           <Hourglass className="h-8 w-8 text-white" />
@@ -12,7 +12,7 @@ export default function Plan() {
       </Reveal>
       <Reveal delay={0.08}>
         <h1 className="mt-8 font-display text-4xl font-bold tracking-tight md:text-5xl">
-          Coming soon
+          Cramming soon
         </h1>
         <p className="mt-4 max-w-md leading-relaxed text-smoke">
           The acetix plan page is still being shaped — pricing, roadmap and

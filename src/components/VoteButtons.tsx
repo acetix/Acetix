@@ -10,7 +10,7 @@ interface VoteButtonsProps {
 
 /**
  * Public like/dislike widget. Counts update optimistically in the UI and
- * persist to Firestore `like`/`dislike` fields. Events are stopped so the
+ * persist to the cloud `like`/`dislike` fields. Events are stopped so the
  * buttons can sit safely inside the card-wide navigation link.
  */
 export default function VoteButtons({ project, large = false }: VoteButtonsProps) {

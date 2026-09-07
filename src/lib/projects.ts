@@ -2,8 +2,8 @@ import type { Project } from './types';
 import { asDate } from './dates';
 
 /*
-  Category ids are not hardcoded — they come from the Firestore
-  `categories` collection (src/lib/useCategories.ts), falling back to the
+  Category ids are not hardcoded — they come from the cloud `categories`
+  collection (src/lib/useCategories.ts), falling back to the
   projects' own `category` fields when that collection is absent. Adding a
   new slug to a project automatically adds a filter option.
 

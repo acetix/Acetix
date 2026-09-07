@@ -7,7 +7,7 @@ const STACK = [
   'TypeScript',
   'Vite',
   'Tailwind CSS',
-  'Firebase / Firestore',
+  'Cloud database',
   'Framer Motion',
   'WebAssembly codecs',
   'Progressive Web Apps',
@@ -33,9 +33,9 @@ const PILLARS = [
 
 export default function About() {
   return (
-    <div className="pb-24 pt-32 md:pt-40">
+    <div className="min-w-0 overflow-x-clip pb-24 pt-32 md:pt-40">
       {/* Intro */}
-      <section className="mx-auto max-w-6xl px-6">
+      <section className="mx-auto min-w-0 max-w-6xl px-6">
         <Reveal>
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand">
             About acetix
@@ -45,8 +45,8 @@ export default function About() {
           </h1>
         </Reveal>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[1.2fr_1fr]">
-          <Reveal delay={0.08}>
+        <div className="mt-10 grid min-w-0 grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] [&>*]:min-w-0">
+          <Reveal delay={0.08} className="min-w-0">
             <div className="space-y-5 leading-relaxed text-smoke">
               <p>
                 I am a developer from Bangladesh who keeps bumping into small,
@@ -67,13 +67,13 @@ export default function About() {
                 The stack is deliberately boring where it should be and
                 ambitious where it counts: React and TypeScript for the
                 interfaces, WebAssembly for heavy lifting in the browser, and
-                Firebase as the quiet backend that stores this catalogue and
-                your messages.
+                a secure cloud service as the quiet backend that stores this
+                catalogue and your messages.
               </p>
             </div>
           </Reveal>
 
-          <Reveal delay={0.14}>
+          <Reveal delay={0.14} className="min-w-0">
             <div className="rounded-3xl border border-ink/10 bg-white p-7">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-smoke">
                 What acetix is built with
@@ -101,13 +101,13 @@ export default function About() {
       </section>
 
       {/* Pillars */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
+      <section className="mx-auto min-w-0 max-w-6xl px-6 py-24">
         <Reveal>
           <h2 className="max-w-xl font-display text-4xl font-bold tracking-tight md:text-5xl">
             What every acetix tool has in common
           </h2>
         </Reveal>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+        <div className="mt-12 grid min-w-0 grid-cols-1 gap-5 md:grid-cols-3 [&>*]:min-w-0">
           {PILLARS.map((pillar, i) => (
             <Reveal key={pillar.title} delay={i * 0.08}>
               <div className="h-full rounded-3xl border border-ink/10 bg-white p-8 transition-shadow duration-300 hover:shadow-xl hover:shadow-ink/5">
@@ -123,9 +123,9 @@ export default function About() {
       </section>
 
       {/* Quote */}
-      <section className="px-6">
-        <Reveal>
-          <div className="mx-auto max-w-6xl rounded-[2.5rem] bg-ink px-6 py-16 text-center md:py-20">
+      <section className="min-w-0 px-6">
+        <Reveal className="min-w-0">
+          <div className="mx-auto min-w-0 max-w-6xl overflow-hidden rounded-[2.5rem] bg-ink px-6 py-16 text-center md:py-20">
             <p className="mx-auto max-w-3xl font-display text-3xl font-bold leading-snug tracking-tight text-paper md:text-4xl">
               “Small tools, sharp edges,{' '}
               <span className="bg-gradient-to-r from-brand via-ember to-sun bg-clip-text text-transparent">
@@ -141,7 +141,7 @@ export default function About() {
       </section>
 
       {/* CTA row */}
-      <section className="mx-auto mt-16 flex max-w-6xl flex-col items-center gap-4 px-6 text-center">
+      <section className="mx-auto mt-16 flex min-w-0 max-w-6xl flex-col items-center gap-4 px-6 text-center">
         <Reveal>
           <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
             See what the workshop has shipped so far.

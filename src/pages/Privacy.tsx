@@ -22,7 +22,7 @@ const TLDR = [
 
 export default function Privacy() {
   return (
-    <div className="mx-auto max-w-4xl px-6 pb-24 pt-32 md:pt-40">
+    <div className="mx-auto max-w-4xl min-w-0 overflow-x-clip px-6 pb-24 pt-32 md:pt-40">
       <Reveal>
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand">
           Privacy
@@ -33,7 +33,7 @@ export default function Privacy() {
         <p className="mt-4 text-sm text-smoke">Last updated: January 2025</p>
       </Reveal>
 
-      <div className="mt-12 grid gap-5 sm:grid-cols-3">
+      <div className="mt-12 grid min-w-0 grid-cols-1 gap-5 sm:grid-cols-3 [&>*]:min-w-0">
         {TLDR.map((item, i) => (
           <Reveal key={item.title} delay={i * 0.07}>
             <div className="h-full rounded-3xl border border-ink/10 bg-white p-6">
@@ -59,7 +59,7 @@ export default function Privacy() {
                 Suggestion Box
               </Link>
               , your idea title, category, description and optional name are
-              saved to a Google Firebase Firestore database so the public
+              saved to a secure Google cloud database so the public
               wishlist can show them. That is the entire list.
             </p>
           </section>
@@ -94,7 +94,7 @@ export default function Privacy() {
             </h2>
             <p className="mt-3">
               Hosting is provided by Vercel, and the contact-form datastore by
-              Google Firebase. Both may process standard technical logs (IP
+              a secure cloud provider. Both may process standard technical logs (IP
               address, browser, timestamps) required to serve the site
               securely. No content data is sold or shared with anyone.
             </p>
@@ -109,7 +109,7 @@ export default function Privacy() {
               <Link to="/contact" className="font-semibold text-brand hover:underline">
                 contact page
               </Link>{' '}
-              and it will be removed from Firestore. Nothing else about you is
+              and it will be removed from the cloud database. Nothing else about you is
               kept, so there is nothing else to delete.
             </p>
           </section>

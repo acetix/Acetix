@@ -5,10 +5,10 @@ import { db } from './firebase';
 /**
  * Site-wide, owner-editable configuration.
  * ─────────────────────────────────────────
- * Lives in Firestore at:  siteConfig/site
+ * Lives in the cloud database at:  siteConfig/site
  *
  * Change contact channels (WhatsApp, Telegram, GitHub, email…) right from
- * the Firebase Console — no redeploy needed. Anything missing simply falls
+ * the backend console — no redeploy needed. Anything missing simply falls
  * back to the defaults below, so the site never looks broken.
  */
 export interface SiteConfig {
@@ -23,8 +23,8 @@ export interface SiteConfig {
   responseTime: string;
 }
 
-/* ডেমো লিংক নেই — সব শূন্য থেকে শুরু; Firestore `siteConfig/site`
-   ডকুমেন্টে যা দেওয়া হবে, ওয়েবসাইটে তাই দেখাবে। */
+/* No demo links — everything starts empty; whatever is set in the
+   cloud `siteConfig/site` document is what the website shows. */
 export const DEFAULT_SITE_CONFIG: SiteConfig = {
   email: '',
   whatsapp: '',

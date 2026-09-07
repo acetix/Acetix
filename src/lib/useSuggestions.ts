@@ -40,8 +40,9 @@ function mapDoc(id: string, data: Record<string, unknown>): Suggestion {
 /**
  * The public suggestion box.
  * Reads every document from the `suggestions` collection (newest first)
- * and writes fresh suggestions straight back to Firestore. Submissions
- * are prepended optimistically so the author sees their idea instantly.
+ * and writes fresh suggestions straight back to the cloud database.
+ * Submissions are prepended optimistically so the author sees their
+ * idea instantly.
  */
 export function useSuggestions() {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);

@@ -106,8 +106,8 @@ export default function Suggest() {
               <h2 className="font-display text-2xl font-bold">Idea received — live below.</h2>
               <p className="max-w-sm text-sm leading-relaxed text-smoke">
                 {via === 'firebase'
-                  ? 'Saved to Firestore and already showing in the wishlist. I review every single one.'
-                  : 'Demo mode saved your idea locally only. Once Firebase rules allow writes, ideas persist for everyone.'}
+                  ? 'Saved to the cloud database and already showing in the wishlist. I review every single one.'
+                  : 'Demo mode saved your idea locally only. Once the backend rules allow writes, ideas persist for everyone.'}
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <button
@@ -186,8 +186,8 @@ export default function Suggest() {
 
               {status === 'error' && (
                 <p className="rounded-2xl bg-brand/10 px-4 py-3 text-sm text-brand">
-                  Something went wrong while saving. Check Firestore rules for the
-                  suggestions collection, then try again.
+                  Something went wrong while saving. Check the backend access
+                  rules for the suggestions collection, then try again.
                 </p>
               )}
 
@@ -229,7 +229,7 @@ export default function Suggest() {
                 ? 'Loading ideas…'
                 : `${suggestions.length} idea${suggestions.length === 1 ? '' : 's'} so far`}
               {!loading && source === 'firebase' && (
-                <span className="block text-xs text-emerald-600">Live from Firestore</span>
+                <span className="block text-xs text-emerald-600">Live from the cloud</span>
               )}
             </p>
           </div>
@@ -244,7 +244,7 @@ export default function Suggest() {
               <p className="mt-1.5 text-sm leading-relaxed text-amber-800/90">
                 Allow public reads on the <code className="rounded bg-white/70 px-1.5 py-0.5">suggestions</code>{' '}
                 collection (<code className="rounded bg-white/70 px-1.5 py-0.5">allow read: if true;</code>{' '})
-                in your Firestore rules and this public wishlist will appear. New submissions still work fine.
+                in your backend access rules and this public wishlist will appear. New submissions still work fine.
               </p>
             </div>
           </Reveal>

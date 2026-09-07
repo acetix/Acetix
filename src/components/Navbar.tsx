@@ -4,10 +4,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 
 const LINKS = [
-  { to: '/projects', label: 'Projects' },
-  { to: '/plan', label: 'Plan' },
-  { to: '/profile', label: 'Profile' },
+  { to: '/projects', label: 'Project' },
   { to: '/contact', label: 'Contact' },
+  { to: '/profile', label: 'Profile' },
+  { to: '/plan', label: 'Plan' },
 ];
 
 export default function Navbar() {

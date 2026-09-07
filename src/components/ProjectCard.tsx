@@ -23,9 +23,9 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Link to={`/projects/${project.id}`} className="group block h-full">
-      <article className="flex h-full flex-col">
-        <div className="relative overflow-hidden rounded-3xl border border-ink/10 bg-sand">
+    <Link to={`/projects/${project.id}`} className="group block h-full min-w-0">
+      <article className="flex h-full min-w-0 flex-col">
+        <div className="relative min-w-0 overflow-hidden rounded-3xl border border-ink/10 bg-sand">
           <ProjectImage
             project={project}
             className="aspect-[16/10] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
@@ -40,20 +40,20 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </span>
         </div>
 
-        <div className="flex flex-1 flex-col pt-5">
+        <div className="flex min-w-0 flex-1 flex-col pt-5">
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand">
             {categoryLabel(project.category)}
           </p>
-          <div className="mt-2 flex items-baseline justify-between gap-3">
-            <h3 className="font-display text-xl font-bold tracking-tight">
+          <div className="mt-2 flex min-w-0 items-baseline justify-between gap-3">
+            <h3 className="min-w-0 break-words font-display text-xl font-bold tracking-tight">
               {project.title}
             </h3>
             <span className="shrink-0 text-xs text-smoke">{projectDomain(project)}</span>
           </div>
-          <p className="mt-2 text-sm leading-relaxed text-smoke">{project.shortDescription}</p>
-          <div className="mt-4 flex items-center justify-between gap-3 pt-1">
+          <p className="mt-2 min-w-0 break-words text-sm leading-relaxed text-smoke">{project.shortDescription}</p>
+          <div className="mt-4 flex min-w-0 items-center justify-between gap-3 pt-1">
             {project.tags.length > 0 ? (
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex min-w-0 flex-wrap gap-1.5">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}

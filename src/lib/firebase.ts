@@ -19,14 +19,14 @@ import {
 import type { ContactMessage } from './types';
 
 /*
-  Firebase boot — project: acetix1 (Firestore region: asia-south1 / Mumbai)
-  ─────────────────────────────────────────────────────────────────────────
-  The live web-app config is embedded below (Firebase web keys are public
-  by design — security is enforced through Firestore Security Rules, not
-  key secrecy). Environment variables (VITE_FIREBASE_*) take priority when
+  Cloud backend boot — project: acetix1 (region: asia-south1 / Mumbai)
+  ─────────────────────────────────────────────────────────────────
+  The live web-app config is embedded below (web keys are public by
+  design — security is enforced through backend access rules, not key
+  secrecy). Environment variables (VITE_FIREBASE_*) take priority when
   present, so you can still point the build at another project without
-  touching code. If Firestore is unreachable the whole site falls back to
-  bundled seed data — nothing ever breaks.
+  touching code. If the backend is unreachable the whole site falls back
+  to bundled seed data — nothing ever breaks.
 */
 const embeddedConfig = {
   apiKey: 'AIzaSyDC61227pFwSqlAqWSfHzPKP7nbn5tY_1o',
@@ -58,9 +58,9 @@ let db: Firestore | null = null;
 let auth: Auth | null = null;
 
 /*
-  ইচ্ছাকৃতভাবে কোনো Firebase/Google Analytics নেই — ইউজার-ট্র্যাকিং বাদ।
-  পরিসংখ্যানের জন্য নিজস্ব দৈনিক ভিজিটর কাউন্টার আছে (src/lib/visitors.ts
-  → visitors/{YYYY-MM-DD} কালেকশন)।
+  No third-party analytics — user tracking is intentionally excluded.
+  Statistics use an in-house daily visitor counter (src/lib/visitors.ts
+  → visitors/{YYYY-MM-DD} collection).
 */
 if (firebaseEnabled) {
   app = initializeApp(config);
@@ -73,12 +73,12 @@ export { onAuthStateChanged, signOut, type User };
 
 /**
  * Sign in with a Google or GitHub popup. Requires the provider to be
- * enabled in the Firebase Console (Authentication → Sign-in method).
+ * enabled in the backend console (Authentication → Sign-in method).
  */
 export async function signInWithProvider(
   providerId: 'google' | 'github',
 ): Promise<User> {
-  if (!auth) throw new Error('Firebase auth is not configured.');
+  if (!auth) throw new Error('Backend auth is not configured.');
   const provider =
     providerId === 'github' ? new GithubAuthProvider() : new GoogleAuthProvider();
   const credential = await signInWithPopup(auth, provider);
@@ -86,8 +86,8 @@ export async function signInWithProvider(
 }
 
 /**
- * Persists a form submission to the `contacts` collection when Firebase
- * is configured (matching the published Security Rules). Falls back to a
+ * Persists a form submission to the `contacts` collection when the backend
+ * is configured (matching the published access rules). Falls back to a
  * simulated send otherwise so the demo experience stays intact.
  */
 export async function sendContactMessage(

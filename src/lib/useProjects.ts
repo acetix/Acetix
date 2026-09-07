@@ -9,13 +9,13 @@ export type ProjectSource = 'firebase' | 'local';
 
 /**
  * What the catalogue is really backed by right now:
- *   live    — documents are being read from Firestore
- *   empty   — Firestore is readable, but `projects` has no documents yet
- *   blocked — Firestore refused the read (rules offline/misconfigured…)
- *   local   — Firebase config missing
+ *   live    — documents are being read from the cloud database
+ *   empty   — the backend is readable, but `projects` has no documents yet
+ *   blocked — the backend refused the read (access offline/misconfigured…)
+ *   local   — backend config missing
  *
  * There is intentionally NO bundled demo catalogue: every card on the
- * site comes from Firestore, and nowhere else.
+ * site comes from the cloud database, and nowhere else.
  */
 export type ProjectsState = 'live' | 'empty' | 'blocked' | 'local';
 
@@ -91,7 +91,7 @@ function load(): Promise<ProjectsData> {
         ? { projects: [], state: 'empty' }
         : { projects: normalize(snapshot.docs), state: 'live' };
     } catch (error) {
-      console.warn('[acetix] Firestore read failed.', error);
+      console.warn('[acetix] Cloud catalogue read failed.', error);
       cache = { projects: [], state: 'blocked' };
     }
     return cache!;

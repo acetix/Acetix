@@ -10,9 +10,9 @@ interface DataSourceBadgeProps {
 /**
  * Live indicator of where the catalogue is actually served from — not a
  * guess based on config, but the real read result:
- *   live    → emerald «Live from Firestore»
- *   empty   → amber   «Firestore খালি — auto-seed pending»
- *   blocked → red     «Rules পাবলিশ করতে হবে»
+ *   live    → emerald «Live from cloud»
+ *   empty   → amber   «No data yet — check back soon»
+ *   blocked → red     «Sync needed — check back soon»
  *   local   → amber   «Demo data»
  */
 export default function DataSourceBadge({ dark = false, state }: DataSourceBadgeProps) {
@@ -35,7 +35,7 @@ export default function DataSourceBadge({ dark = false, state }: DataSourceBadge
           <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
         </span>
         <Database className="h-3.5 w-3.5" />
-        Live from Firestore
+        Live from cloud
       </span>
     );
   }
@@ -51,7 +51,7 @@ export default function DataSourceBadge({ dark = false, state }: DataSourceBadge
       >
         <span className="h-2 w-2 rounded-full bg-amber-500" />
         <Database className="h-3.5 w-3.5" />
-        Firestore খালি — ডেটা যোগ করুন
+        No data yet — check back soon
       </span>
     );
   }
@@ -67,7 +67,7 @@ export default function DataSourceBadge({ dark = false, state }: DataSourceBadge
       >
         <span className="h-2 w-2 rounded-full bg-red-500" />
         <AlertTriangle className="h-3.5 w-3.5" />
-        Rules পাবলিশ করতে হবে
+        Sync needed — check back soon
       </span>
     );
   }

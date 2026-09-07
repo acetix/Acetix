@@ -11,16 +11,16 @@ function todayKey(): string {
 }
 
 /**
- * Daily visitor counter — replaces Google/Firebase Analytics entirely
- * (no user tracking, no cookies: a localStorage flag simply remembers that
- * this browser has already been counted today).
+ * Daily visitor counter — privacy-friendly by design (no user tracking, no
+ * cookies: a localStorage flag simply remembers that this browser has
+ * already been counted today).
  *
- * Firestore layout:
+ * Cloud layout:
  *   visitors/2025-06-14  →  { date: "2025-06-14", count: 37, lastVisitAt: … }
  *
  * Each document is auto-created on the first visit of the day; every
  * subsequent first-of-day visit from a new browser increments `count`.
- * Failures (rules pending, offline) are ignored quietly — counting is
+ * Failures (access pending, offline) are ignored quietly — counting is
  * nice-to-have, never site-breaking.
  */
 export function recordVisit(): void {
@@ -51,6 +51,6 @@ export function recordVisit(): void {
       }
     })
     .catch((error) => {
-      console.warn('[acetix] Visitor counter skipped (rules pending?).', error);
+      console.warn('[acetix] Visitor counter skipped (access pending?).', error);
     });
 }

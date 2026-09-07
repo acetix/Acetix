@@ -56,7 +56,7 @@ export default function Profile() {
         e instanceof Error ? e.message : 'Sign-in failed. Please try again.';
       setError(
         /auth\/(operation-not-allowed|unauthorized-domain)/.test(message)
-          ? 'This provider is not enabled yet — turn it on in Firebase Console → Authentication → Sign-in method.'
+          ? 'This provider is not enabled yet — turn it on in the backend Console → Authentication → Sign-in method.'
           : message,
       );
     } finally {
@@ -75,7 +75,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-6 pb-24 pt-32 md:pt-40">
+    <div className="mx-auto w-full max-w-2xl min-w-0 overflow-x-clip px-6 pb-24 pt-32 md:pt-40">
       <Reveal>
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand">
           Profile
@@ -89,8 +89,8 @@ export default function Profile() {
         </p>
       </Reveal>
 
-      <Reveal delay={0.08}>
-        <div className="mt-12 rounded-3xl border border-ink/10 bg-white p-7 md:p-10">
+      <Reveal delay={0.08} className="min-w-0">
+        <div className="mt-12 min-w-0 rounded-3xl border border-ink/10 bg-white p-7 md:p-10">
           {!firebaseEnabled || !auth ? (
             <div className="flex flex-col items-center gap-4 py-6 text-center">
               <span className="flex h-14 w-14 items-center justify-center rounded-full bg-sand">
@@ -98,8 +98,8 @@ export default function Profile() {
               </span>
               <p className="font-display text-xl font-bold">Sign-in unavailable</p>
               <p className="max-w-sm text-sm leading-relaxed text-smoke">
-                Firebase is not configured for this build, so login is turned
-                off. Connect Firebase to enable Google and GitHub sign-in.
+                Backend is not configured for this build, so login is turned
+                off. Connect the backend to enable Google and GitHub sign-in.
               </p>
             </div>
           ) : status === 'checking' ? (
@@ -134,39 +134,83 @@ export default function Profile() {
               </button>
             </div>
           ) : (
-            <div className="flex flex-col gap-4">
-              <button
-                type="button"
-                disabled={status === 'busy'}
-                onClick={() => void handleSignIn('google')}
-                className="inline-flex w-full items-center justify-center gap-3 rounded-2xl border border-ink/15 bg-paper px-5 py-3.5 text-sm font-bold transition hover:border-ink hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {status === 'busy' ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  <GoogleMark className="h-5 w-5" />
-                )}
-                Continue with Google
-              </button>
-              <button
-                type="button"
-                disabled={status === 'busy'}
-                onClick={() => void handleSignIn('github')}
-                className="inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-ink px-5 py-3.5 text-sm font-bold text-paper transition hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {status === 'busy' ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  <Github className="h-5 w-5" />
-                )}
-                Continue with GitHub
-              </button>
+            <div className="flex min-w-0 flex-col gap-4">
+              <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 [&>*]:min-w-0">
+                <div className="rounded-2xl border border-ink/10 bg-paper p-5">
+                  <h2 className="font-display text-lg font-bold">Login</h2>
+                  <p className="mt-1 text-xs leading-relaxed text-smoke">
+                    Already have an account? Sign back in below.
+                  </p>
+                  <div className="mt-4 flex flex-col gap-3">
+                    <button
+                      type="button"
+                      disabled={status === 'busy'}
+                      onClick={() => void handleSignIn('google')}
+                      className="inline-flex w-full items-center justify-center gap-3 rounded-2xl border border-ink/15 bg-paper px-5 py-3 text-sm font-bold transition hover:border-ink hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {status === 'busy' ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <GoogleMark className="h-5 w-5" />
+                      )}
+                      Login with Google
+                    </button>
+                    <button
+                      type="button"
+                      disabled={status === 'busy'}
+                      onClick={() => void handleSignIn('github')}
+                      className="inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-ink px-5 py-3 text-sm font-bold text-paper transition hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {status === 'busy' ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <Github className="h-5 w-5" />
+                      )}
+                      Login with GitHub
+                    </button>
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-ink/10 bg-paper p-5">
+                  <h2 className="font-display text-lg font-bold">Signup</h2>
+                  <p className="mt-1 text-xs leading-relaxed text-smoke">
+                    New here? Create your profile in one click.
+                  </p>
+                  <div className="mt-4 flex flex-col gap-3">
+                    <button
+                      type="button"
+                      disabled={status === 'busy'}
+                      onClick={() => void handleSignIn('google')}
+                      className="inline-flex w-full items-center justify-center gap-3 rounded-2xl border border-ink/15 bg-paper px-5 py-3 text-sm font-bold transition hover:border-ink hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {status === 'busy' ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <GoogleMark className="h-5 w-5" />
+                      )}
+                      Signup with Google
+                    </button>
+                    <button
+                      type="button"
+                      disabled={status === 'busy'}
+                      onClick={() => void handleSignIn('github')}
+                      className="inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-ink px-5 py-3 text-sm font-bold text-paper transition hover:bg-brand disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {status === 'busy' ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <Github className="h-5 w-5" />
+                      )}
+                      Signup with GitHub
+                    </button>
+                  </div>
+                </div>
+              </div>
               {error && (
                 <p className="rounded-2xl bg-brand/10 px-4 py-3 text-sm text-brand">{error}</p>
               )}
               <p className="text-center text-xs leading-relaxed text-smoke">
-                New here? There is no separate signup — signing in with Google
-                or GitHub creates your profile automatically.
+                One click is all it takes — login and signup both use your
+                Google or GitHub account, no passwords needed.
               </p>
             </div>
           )}

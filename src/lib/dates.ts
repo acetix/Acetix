@@ -1,7 +1,7 @@
 /**
  * Date helpers that tolerate the many shapes a date can take when it
- * arrives from Firestore (Timestamp objects, `{seconds}` maps, ISO
- * strings or epoch numbers) or from bundled seed data.
+ * arrives from the cloud database (Timestamp objects, `{seconds}` maps,
+ * ISO strings or epoch numbers) or from bundled seed data.
  */
 export function asDate(value: unknown): Date | null {
   if (!value) return null;
