@@ -6,6 +6,16 @@ import {
   serverTimestamp,
   type Firestore,
 } from 'firebase/firestore';
+import {
+  getAuth,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+  type Auth,
+  type User,
+} from 'firebase/auth';
 import type { ContactMessage } from './types';
 
 /*
@@ -45,6 +55,7 @@ export const firebaseEnabled = Boolean(config.apiKey && config.projectId);
 
 let app: FirebaseApp | null = null;
 let db: Firestore | null = null;
+let auth: Auth | null = null;
 
 /*
   ইচ্ছাকৃতভাবে কোনো Firebase/Google Analytics নেই — ইউজার-ট্র্যাকিং বাদ।
@@ -54,9 +65,25 @@ let db: Firestore | null = null;
 if (firebaseEnabled) {
   app = initializeApp(config);
   db = getFirestore(app);
+  auth = getAuth(app);
 }
 
-export { app, db };
+export { app, db, auth };
+export { onAuthStateChanged, signOut, type User };
+
+/**
+ * Sign in with a Google or GitHub popup. Requires the provider to be
+ * enabled in the Firebase Console (Authentication → Sign-in method).
+ */
+export async function signInWithProvider(
+  providerId: 'google' | 'github',
+): Promise<User> {
+  if (!auth) throw new Error('Firebase auth is not configured.');
+  const provider =
+    providerId === 'github' ? new GithubAuthProvider() : new GoogleAuthProvider();
+  const credential = await signInWithPopup(auth, provider);
+  return credential.user;
+}
 
 /**
  * Persists a form submission to the `contacts` collection when Firebase

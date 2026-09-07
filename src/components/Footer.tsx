@@ -44,7 +44,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-2.5 text-sm">
               <li><Link className="transition hover:text-paper" to="/">Home</Link></li>
               <li><Link className="transition hover:text-paper" to="/projects">All projects</Link></li>
-              <li><Link className="transition hover:text-paper" to="/about">About</Link></li>
+              <li><Link className="transition hover:text-paper" to="/plan">Plan</Link></li>
               <li><Link className="transition hover:text-paper" to="/contact">Contact</Link></li>
             </ul>
           </div>
@@ -132,6 +132,11 @@ export default function Footer() {
               <li>
                 <Link className="inline-flex items-center gap-2 transition hover:text-paper" to="/privacy">
                   <Globe className="h-4 w-4" /> Privacy
+                </Link>
+              </li>
+              <li>
+                <Link className="inline-flex items-center gap-2 transition hover:text-paper" to="/about">
+                  <Globe className="h-4 w-4" /> About
                 </Link>
               </li>
             </ul>

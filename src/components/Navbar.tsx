@@ -5,8 +5,8 @@ import { ArrowUpRight, Menu, X } from 'lucide-react';
 
 const LINKS = [
   { to: '/projects', label: 'Projects' },
-  { to: '/suggest', label: 'Suggest' },
-  { to: '/about', label: 'About' },
+  { to: '/plan', label: 'Plan' },
+  { to: '/profile', label: 'Profile' },
   { to: '/contact', label: 'Contact' },
 ];
 
