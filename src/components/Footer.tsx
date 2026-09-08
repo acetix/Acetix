@@ -139,6 +139,15 @@ export default function Footer() {
                   <Globe className="h-4 w-4" /> About
                 </Link>
               </li>
+              <li>
+                <span className="inline-flex items-center gap-2 text-paper/50">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                  </span>
+                  All systems normal
+                </span>
+              </li>
             </ul>
           </div>
         </div>

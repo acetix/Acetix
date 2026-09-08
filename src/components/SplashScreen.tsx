@@ -2,15 +2,93 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 /**
- * Branded splash shown on the very first paint — logo pop, wordmark and
- * a gradient progress line — then it hands over to the app.
+ * Branded splash shown until the site is FULLY loaded — logo pop, wordmark
+ * and a gradient progress line. It hides only after window `load`
+ * (all images/chunks), webfonts, AND a minimum display time, so visitors
+ * never see a half-ready page. A matching static `#boot-shell` in
+ * index.html covers the paint before this React component even mounts.
  */
 export default function SplashScreen() {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(false), 1150);
-    return () => clearTimeout(timer);
+    // Hand over from the static pre-React shell to this animated one.
+    document.getElementById('boot-shell')?.remove();
+
+    const MIN_TIME = 1400;
+    const start = Date.now();
+    let winLoaded = document.readyState === 'complete';
+    let fontsReady = false;
+    let minElapsed = false;
+    let done = false;
+
+    function maybeDone() {
+      if (done || !winLoaded || !fontsReady || !minElapsed) return;
+      done = true;
+      // Small extra beat so the bar visibly completes before fading.
+      const extra = Math.max(0, 350 - (Date.now() - start - MIN_TIME));
+      setTimeout(() => setVisible(false), extra);
+    }
+
+    const minTimer = setTimeout(() => {
+      minElapsed = true;
+      maybeDone();
+    }, MIN_TIME);
+
+    function onWinLoad() {
+      winLoaded = true;
+      maybeDone();
+    }
+    if (winLoaded) {
+      // already complete — still go through maybeDone after fonts/min time
+    } else {
+      window.addEventListener('load', onWinLoad, { once: true });
+    }
+
+    let fontsCancelled = false;
+    const fonts = (document as Document & { fonts?: { ready: Promise<unknown> } }).fonts;
+    if (fonts?.ready) {
+      fonts.ready.then(
+        () => {
+          if (!fontsCancelled) {
+            fontsReady = true;
+            maybeDone();
+          }
+        },
+        () => {
+          if (!fontsCancelled) {
+            fontsReady = true;
+            maybeDone();
+          }
+        },
+      );
+      // Safety: never trap the splash if fonts hang.
+      setTimeout(() => {
+        if (!fontsCancelled && !fontsReady) {
+          fontsReady = true;
+          maybeDone();
+        }
+      }, 3500);
+    } else {
+      fontsReady = true;
+    }
+
+    // Safety: never trap the splash if `load` hangs (slow image etc.).
+    const maxTimer = setTimeout(() => {
+      winLoaded = true;
+      fontsReady = true;
+      minElapsed = true;
+      maybeDone();
+    }, 8000);
+
+    maybeDone();
+
+    return () => {
+      clearTimeout(minTimer);
+      clearTimeout(maxTimer);
+      fontsCancelled = true;
+      window.removeEventListener('load', onWinLoad);
+    };
   }, []);
 
   return (

@@ -10,6 +10,7 @@ import Reveal from '../components/Reveal';
 import ProjectImage from '../components/ProjectImage';
 import VoteButtons from '../components/VoteButtons';
 import NotFound from './NotFound';
+import { usePageSeo } from '../lib/usePageSeo';
 import {
   categoryLabel,
   projectDomain,
@@ -36,6 +37,14 @@ export default function ProjectDetail() {
 
   const index = projects.findIndex((p) => p.id === id);
   const project = index >= 0 ? projects[index] : undefined;
+
+  usePageSeo(
+    project ? `${project.title} — free web tool` : 'Project — free web tool',
+    project
+      ? `${project.title}: ${project.shortDescription}`.slice(0, 160)
+      : 'Open a free acetix web tool: overview, features and live app link.',
+    `/projects/${id ?? ''}`,
+  );
 
   if (!project) {
     return <NotFound />;

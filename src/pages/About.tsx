@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, Terminal, Wrench, Palette } from 'lucide-react';
 import Reveal from '../components/Reveal';
+import { usePageSeo } from '../lib/usePageSeo';
 
 const STACK = [
   'React 19',
@@ -32,6 +33,11 @@ const PILLARS = [
 ];
 
 export default function About() {
+  usePageSeo(
+    'About — one developer, many small tools',
+    'About acetix: one developer building free, privacy-first web tools for developers and everyday humans.',
+    '/about',
+  );
   return (
     <div className="min-w-0 overflow-x-clip pb-24 pt-32 md:pt-40">
       {/* Intro */}

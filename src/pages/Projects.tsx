@@ -16,6 +16,7 @@ import CatalogueNotice from '../components/CatalogueNotice';
 import ProjectCard from '../components/ProjectCard';
 import Reveal from '../components/Reveal';
 import SkeletonCard from '../components/SkeletonCard';
+import { usePageSeo } from '../lib/usePageSeo';
 import { projectDomain, categoryMatches } from '../lib/projects';
 import { asDate } from '../lib/dates';
 import { useCategories } from '../lib/useCategories';
@@ -30,6 +31,11 @@ const SORT_OPTIONS = [
 type SortMode = (typeof SORT_OPTIONS)[number]['id'];
 
 export default function Projects() {
+  usePageSeo(
+    'All projects — free web tools collection',
+    'Browse every free acetix web tool in one collection. Filter by category, search by tag or domain, and sort by latest or most liked.',
+    '/projects',
+  );
   const { projects, loading, state } = useProjects();
   const categories = useCategories(projects);
   const [queryText, setQueryText] = useState('');
@@ -100,7 +106,13 @@ export default function Projects() {
 
   return (
     <div className="mx-auto max-w-6xl min-w-0 overflow-x-clip px-6 pb-24 pt-20 md:pt-24">
-      <h1 className="sr-only">All projects — acetix.xyz</h1>
+      <h1 className="mt-8 font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl">
+        All projects — free web tools
+      </h1>
+      <p className="mt-3 max-w-2xl leading-relaxed text-smoke">
+        Every free acetix web tool in one collection. Pick a category in
+        Filters, search by name, tag or domain, and sort by latest or most liked.
+      </p>
       {/* Controls */}
       <Reveal delay={0.08}>
         <div className="mt-2 flex items-center gap-3 border-y border-ink/10 py-5">

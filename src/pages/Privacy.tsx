@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import { Ban, FileLock2, Mail, UserX } from 'lucide-react';
 import Reveal from '../components/Reveal';
+import { usePageSeo } from '../lib/usePageSeo';
 
 const TLDR = [
   {
     icon: UserX,
-    title: 'No accounts',
-    copy: 'acetix tools do not ask who you are. There is nothing to sign in to on the main tools.',
+    title: 'No accounts needed',
+    copy: 'The tools themselves need no account — just open and use them; an optional Profile sign-in exists only for personalization.',
   },
   {
     icon: FileLock2,
@@ -16,11 +17,16 @@ const TLDR = [
   {
     icon: Ban,
     title: 'No ads, no trackers',
-    copy: 'No third-party analytics, no advertising pixels, no behavioural profiling. Ever.',
+    copy: 'This hub site shows no ads and runs no third-party analytics, pixels, or behavioural profiling. Ever.',
   },
 ];
 
 export default function Privacy() {
+  usePageSeo(
+    'Privacy — your data barely exists here',
+    'acetix privacy policy: no accounts needed, files stay on your device, no ads or trackers on this hub. Plain-language privacy.',
+    '/privacy',
+  );
   return (
     <div className="mx-auto max-w-4xl min-w-0 overflow-x-clip px-6 pb-24 pt-32 md:pt-40">
       <Reveal>
@@ -78,13 +84,47 @@ export default function Privacy() {
 
           <section>
             <h2 className="font-display text-2xl font-bold tracking-tight text-ink">
-              Cookies & analytics
+              Cookies & preferences
             </h2>
             <p className="mt-3">
-              There are no advertising cookies. A few tools keep preferences
-              (like your last quality setting or palette history) in your own
-              browser's local storage — that data stays on your machine and can
-              be cleared by emptying browser storage.
+              Apart from the advertising cookies described above, a few tools
+              keep preferences (like your last quality setting or palette
+              history) in your own browser's local storage — that data stays
+              on your machine and can be cleared by emptying browser storage.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-2xl font-bold tracking-tight text-ink">
+              Advertising
+            </h2>
+            <p className="mt-3">
+              This hub website (acetix.xyz) shows no ads itself. Some of the
+              individual acetix projects linked from here may show clearly
+              labeled ads from third-party ad networks (such as Google AdSense
+              and Adsterra) to keep those tools free. Those networks may use
+              cookies or similar technologies to serve and measure
+              personalized or non-personalized ads, including the Google
+              advertising cookie. You can opt out of personalized Google ads in{' '}
+              <a
+                href="https://adssettings.google.com"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-brand hover:underline"
+              >
+                Google Ads Settings
+              </a>
+              , and learn how Google uses data on partner sites at{' '}
+              <a
+                href="https://policies.google.com/technologies/partner-sites"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-brand hover:underline"
+              >
+                policies.google.com
+              </a>
+              . Ad-blockers may prevent ads from loading on those project
+              sites; this hub keeps working either way.
             </p>
           </section>
 

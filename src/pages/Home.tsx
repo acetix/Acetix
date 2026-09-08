@@ -13,6 +13,7 @@ import {
 import Marquee from '../components/Marquee';
 import ProjectCard from '../components/ProjectCard';
 import Reveal from '../components/Reveal';
+import { usePageSeo } from '../lib/usePageSeo';
 import { useProjects } from '../lib/useProjects';
 
 const DEV_POINTS = [
@@ -51,6 +52,11 @@ const PRINCIPLES = [
 ];
 
 export default function Home() {
+  usePageSeo(
+    'Free tools for developers & everyday humans',
+    'acetix.xyz is a single home for free, privacy-first web tools — utilities that make life easier for developers and everyday humans alike.',
+    '/',
+  );
   const { projects } = useProjects();
   const featured = projects.filter((p) => p.featured).slice(0, 3);
   const highlight = featured[0] ?? projects[0];
@@ -59,7 +65,7 @@ export default function Home() {
   return (
     <div className="min-w-0 overflow-x-clip">
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pb-16 pt-32 md:pt-40">
+      <section className="relative overflow-hidden pb-16 pt-24 md:pt-28">
         <div
           className="absolute inset-0 -z-10 opacity-40"
           style={{
@@ -71,7 +77,7 @@ export default function Home() {
 
         <div className="mx-auto max-w-6xl px-6 text-center">
           <Reveal delay={0.08}>
-            <h1 className="mx-auto mt-7 max-w-4xl font-display text-5xl font-bold leading-[1.04] tracking-tight md:text-7xl">
+            <h1 className="mx-auto max-w-4xl font-display text-5xl font-bold leading-[1.04] tracking-tight md:text-7xl">
               Big problems, small tools —{' '}
               <span className="bg-gradient-to-r from-brand via-ember to-sun bg-clip-text text-transparent">
                 all under one roof.
@@ -85,6 +91,17 @@ export default function Home() {
               web apps that make life easier for developers and for everyday
               humans. No accounts, no uploads, no noise — just tools that work.
             </p>
+            <div className="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-2">
+              {['Private by design', 'Works on any device'].map((chip) => (
+                <span
+                  key={chip}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-ink/15 bg-white/70 px-3.5 py-1.5 text-xs font-semibold text-ink backdrop-blur"
+                >
+                  <Check className="h-3.5 w-3.5 text-brand" />
+                  {chip}
+                </span>
+              ))}
+            </div>
           </Reveal>
 
           <Reveal delay={0.24}>
@@ -111,7 +128,10 @@ export default function Home() {
             <img
               src="/images/hero-collage.png"
               alt="A collage of acetix web apps"
-              className="w-full"
+              className="aspect-[16/9] w-full object-cover"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
             />
           </div>
 
@@ -150,14 +170,14 @@ export default function Home() {
       <Marquee items={projects.map((p) => p.title)} />
 
       {/* ── Featured projects ────────────────────────────────── */}
-      <section className="mx-auto min-w-0 max-w-6xl px-6 py-24">
+      <section aria-labelledby="featured-tools" className="mx-auto min-w-0 max-w-6xl px-6 py-24">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand">
                 The collection
               </p>
-              <h2 className="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">
+              <h2 id="featured-tools" className="mt-3 font-display text-4xl font-bold tracking-tight md:text-5xl">
                 Featured tools
               </h2>
             </div>
@@ -293,15 +313,74 @@ export default function Home() {
               The best acetix projects started as somebody's slow Tuesday. Tell
               me what keeps wasting your time — it might be the next thing I build.
             </p>
-            <Link
-              to="/suggest"
-              className="group relative mt-9 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-ink shadow-lg transition hover:shadow-xl"
-            >
-              Suggest a tool
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </Link>
+            <div className="relative mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link
+                to="/suggest"
+                className="group relative inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-ink shadow-lg transition hover:shadow-xl"
+              >
+                Suggest a tool
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
+              <Link
+                to="/projects"
+                className="group relative inline-flex items-center gap-2 rounded-full border border-white/40 px-8 py-4 text-sm font-bold text-white transition hover:bg-white/10"
+              >
+                Browse all tools
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+            <p className="relative mx-auto mt-5 text-xs text-white/70">
+              No sign-up needed — ideas go straight to the public wishlist.
+            </p>
           </div>
         </Reveal>
+      </section>
+
+      {/* ── FAQ ──────────────────────────────────────────────── */}
+      <section aria-labelledby="faq-heading" className="mx-auto min-w-0 max-w-6xl px-6 pb-24">
+        <Reveal>
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-brand">
+            Quick answers
+          </p>
+          <h2 id="faq-heading" className="mt-3 max-w-xl font-display text-4xl font-bold tracking-tight md:text-5xl">
+            Frequently asked
+          </h2>
+        </Reveal>
+        <div className="mt-8 grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2 [&>*]:min-w-0">
+          {[
+            {
+              q: 'Are the tools really free?',
+              a: 'Yes — every tool is free with no accounts, no paywalls and no hidden tiers.',
+            },
+            {
+              q: 'Do my files stay private?',
+              a: 'Most tools run entirely in your browser, so your files never leave your device.',
+            },
+            {
+              q: 'Do the tools work on phones?',
+              a: 'Yes — every page is responsive and tuned for phone, tablet and desktop.',
+            },
+            {
+              q: 'How do I request a new tool?',
+              a: 'Use the Suggest page — good ideas land on the public wishlist and get built in the open.',
+            },
+          ].map((item) => (
+            <details
+              key={item.q}
+              className="group min-w-0 rounded-3xl border border-ink/10 bg-white p-6 transition-shadow duration-300 hover:shadow-xl hover:shadow-ink/5"
+            >
+              <summary className="cursor-pointer list-none font-display text-base font-bold tracking-tight [&::-webkit-details-marker]:hidden">
+                <span className="flex items-center justify-between gap-4">
+                  {item.q}
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-ink/15 text-sm text-smoke transition group-open:rotate-45 group-open:border-brand group-open:text-brand">
+                    +
+                  </span>
+                </span>
+              </summary>
+              <p className="mt-3 text-sm leading-relaxed text-smoke">{item.a}</p>
+            </details>
+          ))}
+        </div>
       </section>
     </div>
   );

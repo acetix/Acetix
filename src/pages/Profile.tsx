@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AlertCircle, Github, Loader2, LogOut } from 'lucide-react';
 import Reveal from '../components/Reveal';
+import { usePageSeo } from '../lib/usePageSeo';
 import {
   auth,
   firebaseEnabled,
@@ -29,6 +30,11 @@ function GoogleMark({ className = '' }: { className?: string }) {
 }
 
 export default function Profile() {
+  usePageSeo(
+    'Profile — your account',
+    'Your acetix profile: sign in or create an account with Google or GitHub. No passwords to remember.',
+    '/profile',
+  );
   const [user, setUser] = useState<User | null>(auth?.currentUser ?? null);
   const [status, setStatus] = useState<AuthStatus>('checking');
   const [error, setError] = useState<string | null>(null);

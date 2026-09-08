@@ -1,7 +1,13 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Compass } from 'lucide-react';
+import { usePageSeo } from '../lib/usePageSeo';
 
 export default function NotFound() {
+  usePageSeo(
+    'Page not found',
+    'The page you are after does not exist — browse the acetix collection of free web tools instead.',
+    '/404',
+  );
   return (
     <div className="mx-auto flex max-w-2xl flex-col items-center px-6 pb-24 pt-40 text-center md:pt-48">
       <span className="flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-brand to-sun">

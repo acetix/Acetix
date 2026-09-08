@@ -9,6 +9,7 @@ import {
   UserRound,
 } from 'lucide-react';
 import Reveal from '../components/Reveal';
+import { usePageSeo } from '../lib/usePageSeo';
 import { timeAgo } from '../lib/dates';
 import { useSuggestions } from '../lib/useSuggestions';
 import type { Suggestion, SuggestionStatus } from '../lib/types';
@@ -25,6 +26,11 @@ const STATUS_META: Record<SuggestionStatus, { label: string; cls: string }> = {
 type FormStatus = 'idle' | 'sending' | 'sent' | 'error';
 
 export default function Suggest() {
+  usePageSeo(
+    'Suggest a tool — community wishlist',
+    'Suggest the next acetix tool: converters, utilities and workflow helpers. Good ideas land on the public wishlist.',
+    '/suggest',
+  );
   const { suggestions, loading, source, loadError, submitSuggestion } = useSuggestions();
   const [searchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');

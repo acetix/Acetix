@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Hourglass } from 'lucide-react';
 import Reveal from '../components/Reveal';
+import { usePageSeo } from '../lib/usePageSeo';
 
 export default function Plan() {
+  usePageSeo(
+    'Plan — roadmap coming soon',
+    'The acetix plan page: upcoming pricing, roadmap and what ships next. Check back soon.',
+    '/plan',
+  );
   return (
     <div className="mx-auto flex min-h-[70vh] w-full max-w-2xl min-w-0 flex-col items-center overflow-x-clip px-6 pb-24 pt-40 text-center md:pt-48">
       <Reveal>

@@ -20,11 +20,17 @@ export default function ProjectImage({ project, className = '' }: ProjectImagePr
       <div
         role="img"
         aria-label={project.title}
-        className={`flex items-center justify-center bg-gradient-to-br ${projectAccent(project)} ${className}`}
+        className={`relative flex items-center justify-center overflow-hidden bg-gradient-to-br ${projectAccent(project)} ${className}`}
       >
-        <span className="font-display text-6xl font-bold text-white/90">
-          {project.title.charAt(0)}
-        </span>
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 opacity-25"
+          style={{
+            backgroundImage: 'radial-gradient(rgba(255,255,255,0.55) 1px, transparent 1px)',
+            backgroundSize: '18px 18px',
+          }}
+        />
+        <img src="/favicon.svg" alt="" aria-hidden="true" className="relative h-14 w-14 opacity-95 drop-shadow-lg" />
       </div>
     );
   }

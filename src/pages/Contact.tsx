@@ -13,6 +13,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import Reveal from '../components/Reveal';
+import { usePageSeo } from '../lib/usePageSeo';
 import { firebaseEnabled } from '../lib/firebase';
 import {
   githubHandle,
@@ -44,6 +45,11 @@ const CATEGORY_CARD_CLASS =
   'group rounded-3xl border border-ink/10 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-xl hover:shadow-ink/5';
 
 export default function Contact() {
+  usePageSeo(
+    'Contact — get in touch',
+    'Contact acetix: instant channels, tool suggestions, bug reports and general feedback. Replies usually within 48 hours.',
+    '/contact',
+  );
   const { config, source } = useSiteConfig();
 
   /* Categories route people to the right place: tools & bugs go to the
@@ -118,6 +124,27 @@ export default function Contact() {
         <h1 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight md:text-6xl">
           Get in touch.
         </h1>
+        <p className="mt-4 max-w-xl leading-relaxed text-smoke">
+          Pick the fastest way to reach out — instant channels below, or a
+          topic card if you have a tool idea, a bug, or general feedback.
+        </p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <a
+            href={`mailto:${config.email.trim()}?subject=${encodeURIComponent('Quick question — acetix.xyz')}`}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-paper transition hover:bg-brand"
+          >
+            <Mail className="h-4 w-4" /> Send a quick email
+          </a>
+          <Link
+            to="/suggest?category=Suggest%20tool"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-semibold transition hover:border-ink"
+          >
+            <Lightbulb className="h-4 w-4" /> Suggest a tool
+          </Link>
+          <span className="inline-flex items-center justify-center gap-2 rounded-full border border-ink/10 px-4 py-3 text-xs font-medium text-smoke">
+            <Clock className="h-3.5 w-3.5" /> {config.responseTime || 'Replies usually within 48 hours.'}
+          </span>
+        </div>
       </Reveal>
 
       {/* Instant channels */}
