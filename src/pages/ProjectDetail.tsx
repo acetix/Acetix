@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
   ArrowRight,
@@ -16,6 +16,7 @@ import {
   projectDomain,
   projectYear,
 } from '../lib/projects';
+import { localizedTo } from '../lib/useLocalizedLink';
 import { useProjects } from '../lib/useProjects';
 import type { Project } from '../lib/types';
 
@@ -34,6 +35,8 @@ const STATUS_LABEL: Record<Project['status'], string> = {
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const { projects } = useProjects();
+  // Re-resolve every render so links keep the current /<location> prefix.
+  useLocation();
 
   const index = projects.findIndex((p) => p.id === id);
   const project = index >= 0 ? projects[index] : undefined;
@@ -60,7 +63,7 @@ export default function ProjectDetail() {
       {/* Back */}
       <Reveal>
         <Link
-          to="/projects"
+          to={localizedTo('/projects')}
           className="group inline-flex items-center gap-2 text-sm font-medium text-smoke transition hover:text-ink"
         >
           <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -147,7 +150,7 @@ export default function ProjectDetail() {
                 </p>
               </div>
               <Link
-                to="/suggest"
+                to={localizedTo('/suggest')}
                 className="rounded-full bg-ink px-5 py-2.5 text-xs font-bold text-paper transition hover:bg-brand"
               >
                 Send feedback
@@ -224,7 +227,7 @@ export default function ProjectDetail() {
       {next && next.id !== project.id && (
         <Reveal>
           <Link
-            to={`/projects/${next.id}`}
+            to={localizedTo(`/projects/${next.id}`)}
             className="group mt-20 flex items-center justify-between gap-6 rounded-3xl bg-ink px-7 py-8 text-paper transition hover:bg-ink-2 md:px-10"
           >
             <div>

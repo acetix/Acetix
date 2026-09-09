@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   ArrowUpRight,
   Bug,
@@ -13,6 +13,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import Reveal from '../components/Reveal';
+import { localizedTo } from '../lib/useLocalizedLink';
 import { usePageSeo } from '../lib/usePageSeo';
 import { firebaseEnabled } from '../lib/firebase';
 import {
@@ -50,6 +51,8 @@ export default function Contact() {
     'Contact acetix: instant channels, tool suggestions, bug reports and general feedback. Replies usually within 48 hours.',
     '/contact',
   );
+  // Re-resolve every render so links keep the current /<location> prefix.
+  useLocation();
   const { config, source } = useSiteConfig();
 
   /* Categories route people to the right place: tools & bugs go to the
@@ -136,7 +139,7 @@ export default function Contact() {
             <Mail className="h-4 w-4" /> Send a quick email
           </a>
           <Link
-            to="/suggest?category=Suggest%20tool"
+            to={localizedTo('/suggest?category=Suggest%20tool')}
             className="inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-semibold transition hover:border-ink"
           >
             <Lightbulb className="h-4 w-4" /> Suggest a tool
@@ -213,7 +216,7 @@ export default function Contact() {
             );
 
             return category.internalTo ? (
-              <Link key={category.label} to={category.internalTo} className={CATEGORY_CARD_CLASS}>
+              <Link key={category.label} to={localizedTo(category.internalTo)} className={CATEGORY_CARD_CLASS}>
                 {inner}
               </Link>
             ) : (

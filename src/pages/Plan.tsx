@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, Hourglass } from 'lucide-react';
 import Reveal from '../components/Reveal';
+import { localizedTo } from '../lib/useLocalizedLink';
 import { usePageSeo } from '../lib/usePageSeo';
 
 export default function Plan() {
+  useLocation();
   usePageSeo(
     'Plan — roadmap coming soon',
     'The acetix plan page: upcoming pricing, roadmap and what ships next. Check back soon.',
@@ -26,14 +28,14 @@ export default function Plan() {
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Link
-            to="/projects"
+            to={localizedTo('/projects')}
             className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-paper transition hover:bg-brand"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             Browse projects
           </Link>
           <Link
-            to="/"
+            to={localizedTo('/')}
             className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-semibold transition hover:border-ink"
           >
             Back home

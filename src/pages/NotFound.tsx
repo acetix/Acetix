@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, Compass } from 'lucide-react';
+import { localizedTo } from '../lib/useLocalizedLink';
 import { usePageSeo } from '../lib/usePageSeo';
 
 export default function NotFound() {
+  // Re-resolve every render so links keep the current /<location> prefix.
+  useLocation();
   usePageSeo(
     'Page not found',
     'The page you are after does not exist — browse the acetix collection of free web tools instead.',
@@ -23,14 +26,14 @@ export default function NotFound() {
       </p>
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
         <Link
-          to="/"
+          to={localizedTo('/')}
           className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-paper transition hover:bg-brand"
         >
           <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
           Back home
         </Link>
         <Link
-          to="/projects"
+          to={localizedTo("/projects")}
           className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-semibold transition hover:border-ink"
         >
           Browse all tools

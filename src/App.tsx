@@ -105,6 +105,14 @@ function LocalePrefixer() {
     const go = (code: string | null) => {
       if (cancelled || !code) return;
       if (current() === code) return;
+      // Never fight a manual choice: only auto-rewrite when the user is
+      // still on a plain URL or an auto-detected code, not one they
+      // picked in the footer switcher (session flag).
+      try {
+        if (sessionStorage.getItem('acetix.locale-manual') === '1') return;
+      } catch {
+        /* storage blocked — fall through to auto behaviour */
+      }
       const { effectivePath } = parseLocalePath(window.location.pathname);
       const tail = effectivePath === '/' ? '/' : effectivePath;
       navigate(`/${code}${tail === '/' ? '/' : tail}${search}${hash}`, {

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import type { Project } from '../lib/types';
 import { categoryLabel, projectDomain } from '../lib/projects';
+import { localizedTo } from '../lib/useLocalizedLink';
 import ProjectImage from './ProjectImage';
 import VoteButtons from './VoteButtons';
 
@@ -23,7 +24,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Link to={`/projects/${project.id}`} className="group block h-full min-w-0">
+    <Link to={localizedTo(`/projects/${project.id}`)} className="group block h-full min-w-0">
       <article className="flex h-full min-w-0 flex-col">
         <div className="relative min-w-0 overflow-hidden rounded-3xl border border-ink/10 bg-sand">
           <ProjectImage

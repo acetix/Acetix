@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   Check,
@@ -17,6 +17,7 @@ import ProjectCard from '../components/ProjectCard';
 import Reveal from '../components/Reveal';
 import SkeletonCard from '../components/SkeletonCard';
 import { usePageSeo } from '../lib/usePageSeo';
+import { localizedTo } from '../lib/useLocalizedLink';
 import { projectDomain, categoryMatches } from '../lib/projects';
 import { asDate } from '../lib/dates';
 import { useCategories } from '../lib/useCategories';
@@ -37,6 +38,8 @@ export default function Projects() {
     '/projects',
   );
   const { projects, loading, state } = useProjects();
+  // Re-resolve every render so links keep the current /<location> prefix.
+  useLocation();
   const categories = useCategories(projects);
   const [queryText, setQueryText] = useState('');
   const [category, setCategory] = useState<string>('all');
@@ -226,7 +229,7 @@ export default function Projects() {
           {/* Suggest a tool */}
           <Reveal delay={Math.min(sorted.length, 5) * 0.06}>
             <Link
-              to="/suggest"
+              to={localizedTo("/suggest")}
               className="group flex h-full min-h-[16rem] flex-col items-center justify-center gap-4 rounded-3xl border-2 border-dashed border-ink/20 p-8 text-center transition hover:border-brand hover:bg-brand/5"
             >
               <span className="flex h-14 w-14 items-center justify-center rounded-full bg-ink text-paper transition group-hover:bg-brand">

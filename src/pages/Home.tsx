@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -13,6 +13,7 @@ import {
 import Marquee from '../components/Marquee';
 import ProjectCard from '../components/ProjectCard';
 import Reveal from '../components/Reveal';
+import { localizedTo } from '../lib/useLocalizedLink';
 import { usePageSeo } from '../lib/usePageSeo';
 import { useProjects } from '../lib/useProjects';
 
@@ -58,6 +59,8 @@ export default function Home() {
     '/',
   );
   const { projects } = useProjects();
+  // Re-resolve every render so links keep the current /<location> prefix.
+  useLocation();
   const featured = projects.filter((p) => p.featured).slice(0, 3);
   const highlight = featured[0] ?? projects[0];
   const count = String(projects.length).padStart(2, '0');
@@ -107,14 +110,14 @@ export default function Home() {
           <Reveal delay={0.24}>
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
-                to="/projects"
+                to={localizedTo("/projects")}
                 className="group inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-paper transition hover:bg-brand"
               >
                 Browse the collection
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
-                to="/about"
+                to={localizedTo("/about")}
                 className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-7 py-3.5 text-sm font-semibold text-ink transition hover:border-ink"
               >
                 Why I build
@@ -182,7 +185,7 @@ export default function Home() {
               </h2>
             </div>
             <Link
-              to="/projects"
+              to={localizedTo("/projects")}
               className="group inline-flex items-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-semibold transition hover:border-ink hover:bg-ink hover:text-paper"
             >
               {projects.length > 0 ? `View all ${projects.length} projects` : 'View projects'}
@@ -315,14 +318,14 @@ export default function Home() {
             </p>
             <div className="relative mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
-                to="/suggest"
+                to={localizedTo("/suggest")}
                 className="group relative inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-ink shadow-lg transition hover:shadow-xl"
               >
                 Suggest a tool
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
               <Link
-                to="/projects"
+                to={localizedTo("/projects")}
                 className="group relative inline-flex items-center gap-2 rounded-full border border-white/40 px-8 py-4 text-sm font-bold text-white transition hover:bg-white/10"
               >
                 Browse all tools

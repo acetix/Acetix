@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Ban, FileLock2, Mail, UserX } from 'lucide-react';
 import Reveal from '../components/Reveal';
+import { localizedTo } from '../lib/useLocalizedLink';
 import { usePageSeo } from '../lib/usePageSeo';
 
 const TLDR = [
@@ -27,6 +28,8 @@ export default function Privacy() {
     'acetix privacy policy: no accounts needed, files stay on your device, no ads or trackers on this hub. Plain-language privacy.',
     '/privacy',
   );
+  // Re-resolve every render so links keep the current /<location> prefix.
+  useLocation();
   return (
     <div className="mx-auto max-w-4xl min-w-0 overflow-x-clip px-6 pb-24 pt-32 md:pt-40">
       <Reveal>
@@ -61,7 +64,7 @@ export default function Privacy() {
             </h2>
             <p className="mt-3">
               Only one thing is intentionally stored: when you post in the{' '}
-              <Link to="/suggest" className="font-semibold text-brand hover:underline">
+              <Link to={localizedTo('/suggest')} className="font-semibold text-brand hover:underline">
                 Suggestion Box
               </Link>
               , your idea title, category, description and optional name are
@@ -130,6 +133,24 @@ export default function Privacy() {
 
           <section>
             <h2 className="font-display text-2xl font-bold tracking-tight text-ink">
+              Location URLs
+            </h2>
+            <p className="mt-3">
+              To keep loading fast nearby, the address bar may show a regional
+              prefix such as acetix.xyz/bd-dhaka/projects. This is only a
+              display address: the region is guessed on your own device from
+              timezone, language, or an approximate network lookup, refreshed
+              automatically, and never saved to any account or cache file.
+              Every regional address points to the same page, and search
+              engines only index the plain address without the prefix — you
+              can remove the prefix at any time and the site works the same.
+              You can also pick a region manually from the location switcher
+              in the footer.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-display text-2xl font-bold tracking-tight text-ink">
               Third-party services
             </h2>
             <p className="mt-3">
@@ -146,7 +167,7 @@ export default function Privacy() {
             </h2>
             <p className="mt-3">
               Want a suggestion you posted removed? Reach out via the{' '}
-              <Link to="/contact" className="font-semibold text-brand hover:underline">
+              <Link to={localizedTo('/contact')} className="font-semibold text-brand hover:underline">
                 contact page
               </Link>{' '}
               and it will be removed from the cloud database. Nothing else about you is
@@ -165,7 +186,7 @@ export default function Privacy() {
                 </h2>
                 <p className="mt-1.5 text-sm">
                   Use any channel on the{' '}
-                  <Link to="/contact" className="font-semibold text-brand hover:underline">
+                  <Link to={localizedTo('/contact')} className="font-semibold text-brand hover:underline">
                     contact page
                   </Link>
                   . Privacy questions get answered as plainly as this page.

@@ -20,7 +20,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-ink/10 bg-paper/85 backdrop-blur-xl">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link
-          to="/"
+          to={localizedTo('/')}
           onClick={() => setOpen(false)}
           className="flex items-center gap-2.5"
           aria-label="acetix.xyz home"

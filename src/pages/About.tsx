@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, Terminal, Wrench, Palette } from 'lucide-react';
 import Reveal from '../components/Reveal';
+import { localizedTo } from '../lib/useLocalizedLink';
 import { usePageSeo } from '../lib/usePageSeo';
 
 const STACK = [
@@ -38,6 +39,8 @@ export default function About() {
     'About acetix: one developer building free, privacy-first web tools for developers and everyday humans.',
     '/about',
   );
+  // Re-resolve every render so links keep the current /<location> prefix.
+  useLocation();
   return (
     <div className="min-w-0 overflow-x-clip pb-24 pt-32 md:pt-40">
       {/* Intro */}
@@ -156,14 +159,14 @@ export default function About() {
         <Reveal delay={0.08}>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Link
-              to="/projects"
+              to={localizedTo("/projects")}
               className="group inline-flex items-center gap-2 rounded-full bg-ink px-7 py-3.5 text-sm font-semibold text-paper transition hover:bg-brand"
             >
               All projects
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
-              to="/contact"
+              to={localizedTo("/contact")}
               className="group inline-flex items-center gap-2 rounded-full border border-ink/20 px-7 py-3.5 text-sm font-semibold transition hover:border-ink"
             >
               Say hello
