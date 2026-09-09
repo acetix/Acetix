@@ -9,13 +9,13 @@ interface VoteButtonsProps {
 }
 
 /**
- * Public like/dislike widget. Counts update optimistically in the UI and
- * persist to the cloud `like`/`dislike` fields. Events are stopped so the
- * buttons can sit safely inside the card-wide navigation link.
+ * Public like/dislike widget. Voting still works and counts persist to the
+ * cloud `like`/`dislike` fields (used for ordering), but the totals are
+ * intentionally never shown — only the visitor's own active choice is
+ * highlighted. Events are stopped so the buttons can sit safely inside
+ * the card-wide navigation link.
  */
 export default function VoteButtons({ project, large = false }: VoteButtonsProps) {
-  const [likeCount, setLikeCount] = useState(project.like ?? 0);
-  const [dislikeCount, setDislikeCount] = useState(project.dislike ?? 0);
   const [myVote, setMyVote] = useState<Vote | null>(() => myVoteFor(project.id));
   const [busy, setBusy] = useState(false);
 
@@ -26,8 +26,6 @@ export default function VoteButtons({ project, large = false }: VoteButtonsProps
     setBusy(true);
     try {
       const result = await voteOnProject(project, vote);
-      setLikeCount(result.like);
-      setDislikeCount(result.dislike);
       setMyVote(result.myVote);
     } finally {
       setBusy(false);
@@ -60,7 +58,6 @@ export default function VoteButtons({ project, large = false }: VoteButtonsProps
         } disabled:opacity-60`}
       >
         <ThumbsUp className={iconCls} fill={myVote === 'like' ? 'currentColor' : 'none'} />
-        {likeCount}
       </button>
       <button
         type="button"
@@ -75,7 +72,6 @@ export default function VoteButtons({ project, large = false }: VoteButtonsProps
         } disabled:opacity-60`}
       >
         <ThumbsDown className={iconCls} fill={myVote === 'dislike' ? 'currentColor' : 'none'} />
-        {dislikeCount}
       </button>
     </span>
   );

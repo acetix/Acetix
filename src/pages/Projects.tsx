@@ -106,13 +106,7 @@ export default function Projects() {
 
   return (
     <div className="mx-auto max-w-6xl min-w-0 overflow-x-clip px-6 pb-24 pt-20 md:pt-24">
-      <h1 className="mt-8 font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl">
-        All projects — free web tools
-      </h1>
-      <p className="mt-3 max-w-2xl leading-relaxed text-smoke">
-        Every free acetix web tool in one collection. Pick a category in
-        Filters, search by name, tag or domain, and sort by latest or most liked.
-      </p>
+      <h1 className="sr-only">All projects — acetix.xyz</h1>
       {/* Controls */}
       <Reveal delay={0.08}>
         <div className="mt-2 flex items-center gap-3 border-y border-ink/10 py-5">

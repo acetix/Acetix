@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUp, Lightbulb } from 'lucide-react';
+import { localizedTo } from '../lib/useLocalizedLink';
 
 /**
  * One floating button, two jobs:
@@ -19,7 +20,7 @@ export default function FloatingActions() {
   const [labelOn, setLabelOn] = useState(false);
   const [hover, setHover] = useState(false);
 
-  const onSuggestPage = pathname.startsWith('/suggest');
+  const onSuggestPage = pathname.startsWith('/suggest') || pathname.endsWith('/suggest');
   const mode: 'suggest' | 'up' = scrolled ? 'up' : 'suggest';
   const hidden = onSuggestPage && !scrolled;
 
@@ -53,7 +54,7 @@ export default function FloatingActions() {
     if (mode === 'up') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      navigate('/suggest');
+      navigate(localizedTo('/suggest'));
     }
   }
 

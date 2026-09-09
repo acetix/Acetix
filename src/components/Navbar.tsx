@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { localizedTo } from '../lib/useLocalizedLink';
 
 const LINKS = [
   { to: '/projects', label: 'Project' },
@@ -12,6 +13,8 @@ const LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  // Re-resolve every render so links keep the current /<location> prefix.
+  useLocation();
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-ink/10 bg-paper/85 backdrop-blur-xl">
@@ -32,7 +35,7 @@ export default function Navbar() {
           {LINKS.map((link) => (
             <NavLink
               key={link.to}
-              to={link.to}
+              to={localizedTo(link.to)}
               className={({ isActive }) =>
                 `rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                   isActive
@@ -48,7 +51,7 @@ export default function Navbar() {
 
         <div className="hidden md:block">
           <Link
-            to="/projects"
+            to={localizedTo('/projects')}
             className="group inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-brand to-ember px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:shadow-md hover:brightness-105"
           >
             Explore tools
@@ -79,7 +82,7 @@ export default function Navbar() {
               {LINKS.map((link) => (
                 <NavLink
                   key={link.to}
-                  to={link.to}
+                  to={localizedTo(link.to)}
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
                     `block rounded-2xl px-4 py-3 text-base font-medium ${
@@ -91,7 +94,7 @@ export default function Navbar() {
                 </NavLink>
               ))}
               <Link
-                to="/projects"
+                to={localizedTo('/projects')}
                 onClick={() => setOpen(false)}
                 className="mt-2 block rounded-2xl bg-gradient-to-r from-brand to-ember px-4 py-3 text-center text-base font-semibold text-white"
               >
